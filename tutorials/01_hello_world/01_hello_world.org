@@ -30,8 +30,8 @@ The first thing we need is to create the project files needed by our compiler.
 We are going to use a program called cmake that simplifies this process and makes it
 portable across platforms and compilers.
 
-0. Open a Cygwin64 terminal. You can know the current directory using the command ~pwd~, and change directories
-using ~cd~ followed by the directory where you want to go. 
+0. Open a GitBash terminal. You can know the current directory using the command ~pwd~, and change directories
+using ~cd~ followed by the directory where you want to go.
 
 Using ~cd~ change to the directory where you uncompressed the lab files. You can use the key ~<TAB>~ to complete 
 filenames and directories.
@@ -242,7 +242,7 @@ I have modified my program to make it fail during test 5:
 
 [[file:fail-test5.png]]
 
-*Warning Make sure you run the following commands in the cygwin64 Terminal, in the directory build of part3 of the lab.*
+*Warning Make sure you run the following commands in the GitBash Terminal, in the directory build of part3 of the lab.*
 
 *** Finding out what the problem is
 
