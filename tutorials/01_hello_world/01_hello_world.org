@@ -20,9 +20,9 @@ The objectives of this lab are:
 * Download the cmake files 
 
 1. Download the following files:
-   https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab01-files.zip
-2. Uncompress the files. Make sure you know where you have decompressed them.
+https://github.com/etcwilde/csc116F17labs/raw/master/tutorials/01_hello_world/files/lab01.zip
 
+2. Uncompress the files. Make sure you know where you have decompressed them.
 
 * Part 1: hello world
 
