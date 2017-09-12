@@ -193,7 +193,7 @@ how  many integers are there, but you should read until there are no more intege
 Your program should:
 
 - Print how many integers you read
-- Print the sume of all the integers read.
+- Print the sum of all the integers read.
 
 For example, for the following input:
 
