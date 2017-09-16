@@ -1,0 +1,15 @@
+Object of type [point]. Location (0,0) with area: nan
+
+Object of type [point]. Location (1,1) with area: nan
+
+Object of type [point]. Location (5.9,0.2) with area: nan
+
+Object of type [point]. Location (1,1) with area: nan
+
+Object of type [point]. Location (-1,-1) with area: nan
+
+Object of type [point]. Location (8.9,2.2) with area: nan
+
+Distance between p0 and p1 is 1.41421
+Distance between p1 and p5 is 7.99062
+Distance between p5 and p1 is 0

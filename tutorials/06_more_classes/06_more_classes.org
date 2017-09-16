@@ -1,0 +1,167 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: 
+#+CATEGORY: 
+#+PROPERTY: header-args: lang           :varname value
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+#+OPTIONS: tex:t
+
+* More Classes and Operators
+
+This lab reinforces some of the class and object semantics covered last week, and also introduces
+operator overloading. The data structure you will implement in this lab is an extension of the 
+matrix material covered in lab 4.
+
+Parts 1 and 2 both use the same Matrix class (in the files ~matrix.cpp~ and ~matrix.hpp~). Your
+implementation should be contained entirely in ~matrix.cpp~. When you finish part 1, copy the contents
+from ~matrix.cpp~ into part 2 to reuse them.
+
+
+* Download the files
+
+As with previous labs, download the files from 
+https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab06-files.zip
+and expand them into your h: drive.
+
+* Part 1: The Basic Interface of the Matrix class
+
+Run cmake as usual to create the Visual Studio configuration files. 
+
+The task for part 1 is to implement two constructors and some methods for the ~Matrix~ class. Write implementations of all of the methods in in ~matrix.cpp~ until you
+reach the comment delineating the part 2 material. The material covered in part 1 should be review for you.
+The executable for part 1 is called ~part1~ and the main function is contained in ~part1.cpp~. However, you do not need to modify main or any of the other contents
+of ~part1.cpp~.
+ 
+As usual, several automated tests have been provided, and should all pass once your solution is complete.
+
+* Part 2: Operators
+
+The ~Matrix~ class describes a data structure that represents a mathematical matrix. Recall from linear algebra that various arithmetic
+operations are defined on matrices.
+ - The sum C = A + B of two n \times m matrices is an n \times m matrix C where C_{ij} = A_{ij} + B_{ij}.
+ - The product B = cA, where A is an n \times m matrix and c is a scalar, is defined to be an n \times m matrix where B_{ij} = cA_{ij}.
+ - The product Ac, where c is a scalar, is identical to cA
+C++ allows the  +  and * operators to be defined for any type, using /operator overloading/, which allows a function-like syntax to be used to specify operator behavior.
+By defining  +  and * operators for the ~Matrix~ class, it is possible to use matrices with natural mathematical notation, instead of cumbersome functions like ~add_matrices~ from lab 4.
+
+** Defining operators
+
+Almost all operators in C++ can be overloaded for arbitrary types. Wikipedia has a convenient list of all C++ operators and their characteristics at [[https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B][https://en.wikipedia.org/wiki/Operators_in_C_and_C++]].
+An operator in C++ is defined and behaves like a regular function or method, except with a different notation for the function name. Consider the following function signature, which
+could be used for a function to compute a product like cA.
+
+#+BEGIN_EXAMPLE
+Matrix scalar_times_matrix(double c, Matrix A){
+	//...
+}
+#+END_EXAMPLE
+
+The same operation could be implemented as a case of the multiplication operator by defining it as ~operator*~:
+#+BEGIN_EXAMPLE
+Matrix operator*(double c, Matrix A){
+	//...
+}
+#+END_EXAMPLE
+
+Note that like any other function, an operator may take arguments of any type and return any type. The only special restriction on operators is that you may only overload existing
+operators (like those in the Wikipedia list above) and that the number of arguments is fixed (for example, the + operator is required to take 2 arguments).
+
+There is also no requirement that the types you use for your operators be types you have created. For example, by default, the ~std::string~ class does not support adding a string
+to a numerical value (even though addition of two strings is permitted). You could define an operator which concatenates a string and an integer as follows.
+#+BEGIN_EXAMPLE
+std::string operator+(std::string s, int j){
+	return s + std::to_string(j);
+}
+#+END_EXAMPLE
+
+** Operators on class types
+
+Consider the simple class ~Point~ below, which represents an (x,y) point in the plane. Note that the data values ~x~ and ~y~ are public, and can be modified by anyone (even
+functions outside the class).
+#+BEGIN_EXAMPLE
+class Point{
+public:
+	double x,y;
+	Point(){
+		x = 0;
+		y = 0;
+	}
+	Point(double x_val, double y_val){
+		x = x_val;
+		y = y_val;
+	}
+	
+	// (Point) + (Point) {Version 1}
+	//Add this point to the provided other point
+	Point operator+(Point other_point){
+		Point result;
+		result.x = x + other_point.x;
+		result.y = y + other_point.y;
+		return result;
+	}
+	
+};
+#+END_EXAMPLE
+
+The + operator is overloaded by the ~operator+~ method inside the ~Point~ class. When an overloaded operator is a class method, the first argument is /implicitly/ assumed
+to be the current object. So the + operator above takes two operands: the left operand is the current object and the right operand is provided as the argument ~other_point~.
+The same operator could also be defined outside the ~Point~ class, in which case it would need to take two arguments:
+#+BEGIN_EXAMPLE
+// (Point) + (Point) {Version 2}
+//Add the points P1 and P2
+//(This function is not part of any class)
+Point operator+(Point P1, Point P2){
+	Point result;
+	result.x = P1.x + P2.x;
+	result.y = P1.y + P2.y;
+	return result;
+}
+#+END_EXAMPLE
+
+One advantage of defining operators inside classes is that the operator, as a class member, has full access to the private data of the class. Operators
+defined outside classes can still be given access to the private members of that class through the use of a ~friend~ directive.
+
+Note that the order of operands is significant when overloading operators. Consider the following operator to implement multiplication of a ~Point~ by a scalar.
+#+BEGIN_EXAMPLE
+// (Point)*(double)
+Point operator*(Point P, double s){
+	Point result;
+	result.x = s*P1.x;
+	result.y = s*P1.y;
+	return result;
+}
+#+END_EXAMPLE
+The operator above would allow code like the following
+#+BEGIN_EXAMPLE
+Point Q(6,10);
+Point R = Q*3;
+#+END_EXAMPLE
+but would not allow code like the following
+#+BEGIN_EXAMPLE
+Point Q(6,10);
+Point R = 3*Q;
+#+END_EXAMPLE
+since the operator is only defined to take a ~Point~ as the left-hand operand to the * and a scalar as the right-hand operand.
+
+** Part 2 Implementation
+
+Your task for part 2 is to implement the ~+~, ~-~, ~*~, ~==~ (equality) and ~!=~ (inequality) operators for the ~Matrix~ class. Use your part 1 code as a starting point.
+When your operators are implemented correctly, the automated tests should all pass.
+
+You may need to add ~friend~ directives for some of the operators if you use private members of the ~Matrix~ class in the operator.
+
+Hint: Observe that some of the operators can be implemented easily by using other operators. For example, the scalar-by-matrix product cA is identical to Ac.
+
+* Questions
+
+Answer the following questions:
+
+- Could the two constructors of ~Matrix~ in part 1 be collapsed into a single constructor while still allowing declarations like ~Matrix Q(3,3);~ and ~Matrix R(3,3,10);~?
+- Why is it not possible to define all of the operators in part 2 as part of the ~Matrix~ class (that is, why do some operators have to be defined outside the class scope)?
+
+

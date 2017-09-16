@@ -1,0 +1,11 @@
+Reading matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 3 x 3
+M: 
+1 0 0 
+0 0 0 
+0 0 2 
+M is diagonal.
+Trace of M: 3

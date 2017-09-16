@@ -1,0 +1,13 @@
+Reading first matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 3 x 3
+M1: 
+1 2 3 
+4 5 6 
+7 8 9 
+Reading second matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+Error reading matrix: Invalid matrix element

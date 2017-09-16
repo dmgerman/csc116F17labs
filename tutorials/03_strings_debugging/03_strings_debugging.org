@@ -1,0 +1,206 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: 
+#+CATEGORY: 
+#+PROPERTY: header-args: lang           :varname value
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+* More Vectors and Debugging Techniques
+
+This lab covers some debugging techniques, and also includes more practice working
+with strings and vectors.
+
+* Download the files
+
+As with previous labs, download the files from 
+https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab03-files.zip
+and expand them into your h: drive.
+
+* Part 1: Debugging Techniques
+
+Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+
+The provided program for part 1 is called ~string_case~, and contains semantic and logical errors. Unlike syntax errors, which are caught
+by the compiler, semantic and logical errors can be difficult to diagnose and debug. Although the errors in the program provided may be
+detectable without any extra tools, it is useful to have some experience with automated methods for debugging.
+
+** Tracing exceptions
+
+All three of the automated test cases provided with the files will fail due to the bugs. The first automated test case uses the input
+string "HelloWorld". Providing this input manually (using the usual /Start without Debugging/ option in Visual Studio) gives the result shown below.
+
+
+[[file:images/runtime_error.png]]
+
+Choosing "Abort" in this case will end the program. This is a type of /exception/, which is a form of error created in C++ programs. If
+an exception is not otherwise handled, it causes the program to terminate immediately (creating and handling exceptions will be covered
+later in the course). Using Visual Studio's debugging features, we can see exactly where the invlaid operation occurred.
+
+Running the program with the /Start Debugging/ option in the Debug menu and providing the same input string "HelloWorld" will
+result in the following.
+
+[[file:images/runtime_error_debug.png]]
+
+Choosing "Break" will stop the program and seek to the line of code where the error occurred. You will see a view like the following.
+
+[[file:images/runtime_error_after_break.png]]
+
+Notice the arrow next to line 49, which indicates the position of the program when the error occurred. The lower pane shows all of the
+variables available at this point in the code. Objects, like the string variable ~s~, can be expanded to examine their contents.
+Notice that the "size" attribute is equal to 10, but the index ~i~ is also equal to 10. Since there is no index 10 in a sequence
+of 10 elements (with indices that start at 0), a possible source of the error is an out of bounds call to ~.at()~ on line 49.
+
+** Breakpoints
+
+After fixing the error in the previous section, the automated tests produce the following results.
+
+#+BEGIN_EXAMPLE
+    Start 1: test01
+1/3 Test #1: test01 ...........................   Passed    0.19 sec
+    Start 2: test02
+2/3 Test #2: test02 ...........................***Failed    0.18 sec
+    Start 3: test03
+3/3 Test #3: test03 ...........................***Failed    0.17 sec
+
+33% tests passed, 2 tests failed out of 3
+
+Total Test time (real) =   0.56 sec
+#+END_EXAMPLE
+
+The input string for test 2 is "Hello World". Running the program (after fixing the above runtime error) with that input produces the
+following output.
+
+[[file:images/test02_invalid.png]]
+
+Although the count of uppercase letters is correct, the count of lowercase letters is incorrect. Since this is not a runtime error,
+it is not possible to directly trace the source of the problem. Using a feature called /breakpoints/, we can inspect the state of
+the program at regular intervals to investigate the bug. The loop which computes the counts of uppercase and lowercase letters starts
+on line 30 of the provided code. Double-clicking in the gray margin next to the line number will create a breakpoint. For example,
+in the image below, a breakpoint has been set at line 31.
+
+
+[[file:images/breakpoint.png]]
+
+After a breakpoint has been set, running the code with the /Start Debugging/ option will result in the program stopping every time the
+breakpoint is reached, allowing you to inspect the local variables and other aspects of the program state. After entering
+the input string "Hello World", the breakpoint is triggered at iteration 0 of the loop:
+
+
+[[file:images/first_break.png]]
+
+
+To continue execution after the break, press the /Continue/ button in the toolbar or Debug menu (or use the F5 key). The breakpoint will
+be triggered again on every other iteration of the loop until either the program ends or the breakpoint is deleted. This allows you
+to watch the progression of the ~uppercase~ and ~lowercase~ counters to detect the point when the error occurs. 
+
+The /Stop Debugging/ entry in the Debug menu will end the debugging session and return to the usual Visual Studio display.
+
+** Test the fixed code
+
+Once fixed, all three of the automated tests should pass:
+
+#+BEGIN_EXAMPLE
+    Start 1: test01
+1/3 Test #1: test01 ...........................   Passed    0.25 sec
+    Start 2: test02
+2/3 Test #2: test02 ...........................   Passed    0.21 sec
+    Start 3: test03
+3/3 Test #3: test03 ...........................   Passed    0.19 sec
+100% tests passed, 0 tests failed out of 3
+Total Test time (real) =   0.65 sec
+#+END_EXAMPLE
+
+* Part 2: More on Vectors
+
+Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+
+For this program the name of the executable is ~read_grades~. Load the solution ~read_grades.sln~ into Visual Studio.
+
+The program is a simple grade calculator, which reads a set of grades from the user, then prints out the following
+statistics
+ - The mean (average) of all grades.
+ - The median of all grades.
+ - The mean of all grades, excluding zeros.
+ - The median of all grades, excluding zeros.
+
+
+As provided, the program reads a set of grade values from standard input and calls functions to compute each of the above statistics from
+the vector of input data. Each function is empty in the provided code.
+
+** Modify the Program 
+
+Modify the program to implement the ~compute_mean~, ~compute_median~ and ~delete_zeros~ functions, which
+are empty in the provided code. Documentation on the expected behavior of each function is available
+in the comments above each function.
+
+** Deleting elements of a vector
+
+The ~erase~ method of a vector will remove an element at any position (and move the remaining elements to fill the missing space). 
+To remove a single element at index ~i~, a call like the following can be used
+
+#+BEGIN_EXAMPLE
+V.erase( V.begin() + i )
+#+END_EXAMPLE
+
+The argument to ~V.erase()~ must be an iterator, but the provided iterator becomes invalid after the ~erase~ method finishes.
+The notation ~V.begin() + i~ creates a temporary iterator which ceases to exist after the call to ~erase~.
+
+** Sorting a vector
+
+The C++ standard library includes a function ~std::sort~ (available via "#include <algorithm>"), which takes a collection (such as a vector) and sorts part or all
+of its elements. The arguments to ~std::sort~ are the beginning and end of the range to sort, as iterators. To sort all of the
+elements in a vector V, the following call to ~std::sort~ can be used
+
+#+BEGIN_EXAMPLE
+std::sort( V.begin(), V.end() )
+#+END_EXAMPLE
+
+
+
+** Test your Solution
+
+You should test your program by hand as you implement your solution. Once you believe it is correct,
+you can run the automated tests (see Part 3 of the first lab for details).
+There are 7 tests in for this task. When you code is correct, you will get output like the following.
+
+#+BEGIN_EXAMPLE
+    Start 1: test01
+1/7 Test #1: test01 ...........................   Passed    0.16 sec
+    Start 2: test02
+2/7 Test #2: test02 ...........................   Passed    0.13 sec
+    Start 3: test03
+3/7 Test #3: test03 ...........................   Passed    0.13 sec
+    Start 4: test04
+4/7 Test #4: test04 ...........................   Passed    0.13 sec
+    Start 5: test05
+5/7 Test #5: test05 ...........................   Passed    0.13 sec
+    Start 6: test06
+6/7 Test #6: test06 ...........................   Passed    0.13 sec
+    Start 7: test07
+7/7 Test #7: test07 ...........................   Passed    0.13 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =   1.05 sec
+#+END_EXAMPLE
+
+* Questions
+
+Answer the following questions:
+
+- In the ~remove_uppercase~ function in part 1, why would a range-based for loop of the form ~for( auto c: s)~
+  be more likely to produce bug-free code than the index-based for loop used in the provided code?
+
+- Consider the ~delete_zeros~ function from part 2:
+#+BEGIN_SRC C++ 
+void delete_zeros( std::vector<int>& V )
+#+END_SRC
+  Why is the argument V passed as type ~std::vector<int>&~ instead of ~std::vector<int>~?
+ 
+
+

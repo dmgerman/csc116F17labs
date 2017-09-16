@@ -1,0 +1,293 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: Memory management
+#+CATEGORY: 
+#+PROPERTY: header-args:sql             :engine postgresql  :exports both :cmdline csc370
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+
+* Introduction
+
+One important feature of C and C++ is the ability to directly allocate and deallocate memory, and to manage this memory with pointers.
+
+C++ supports two main methods of memory allocation. The first, called *direct memory management* is seen today as
+obsolete and should be avoided. However, it is still very common and you should be aware of it.
+
+The second method, called *smart pointers* tries to remove some of the difficulties that direct memory management has.
+
+* Direct memory management in C++
+
+In C, every time you want to allocate a pointer you had to call /malloc/calloc/realloc/. This memory was later released using /free/.
+
+For example, to allocate an array of 100 characters one would:
+
+#+BEGIN_SRC C
+char *p;
+
+p = malloc(sizeof(char)*100);
+
+// p would be equal to NULL if not enough memory
+
+//...
+
+free(p);
+#+END_SRC
+
+C++ uses /new/ to allocate memory and delete to deallocate it. 
+
+- *new* requires a type, not a size in bytes
+
+#+BEGIN_SRC C++
+
+char *p;
+
+p = new char[100];
+
+// a exception is raised if not enough memory
+
+// ...
+
+delete p;
+
+#+END_SRC
+
+There are four main differences between C and C++ direct memory management:
+
+- *new* calculates itself the amount of memory required based on the type of its parameter
+- *new* calls the constructor (o constructors) of the newly allocated memory, if they exist
+- *delete* calls the destructor of the objects before their memory is released
+- an *exception* is raised if there is not enough memory
+
+
+It is possible to avoid the exception, and instead, one must  check against  the value *nullptr*, equivalent to *NULL* in C.
+
+#+BEGIN_SRC C++ :main no :flags -std=c++14 -Wall --pedantic -Werror :results output :exports both
+#include <new>  
+#include <iostream>
+int main()
+{
+   long long int i = 10000000000000;
+  
+  std::cout << "Attempting to allocate " << i << " bytes... " ;
+
+   char *p = new (std::nothrow) char[i];
+
+   if (p == nullptr) 
+      std::cout << "failure!!!" << std::endl;
+   else 
+      std::cout << "success." << std::endl;
+   return 0;
+}
+
+#+END_SRC
+
+
+* Smart pointers
+
+Smart pointers are an attempt to remove the main problem of direct memory management in C and C++.
+
+In direct memory management, every *new* has to have a corresponding *delete*. The programmer is responsible to keep
+track of this. This is hard in complex programs.
+
+Smart pointers completely remove the need to both use *new* and *delete*. 
+Smart pointers are objects that at creation time allocate the requested memory, keep track of it, and release it automatically when they
+cease to exist (go out of scope). In other words, the programmer never has to worry about explicitly allocating or deallocating the memory.
+
+There are two memory management class in modern C++:
+
+- *std::unique_ptr*: only one pointer can point to the same object
+- *std::shared_ptr*: multiple pointers can point to the same object
+
+In this lab we will concentrate on *std::shared_ptr*. These pointers work exactly as traditional pointers, except for:
+
+- how they are declared
+- how memory is allocated for them
+- how memory is released
+
+** how to declare a std::shared_ptr
+
+This type of declaration does not allocate memory for the pointer, simply allocates it.
+
+#+BEGIN_SRC C++
+#include <memory>
+
+std::shared_ptr<type> ptrName;
+#+END_SRC
+
+Examples:
+
+#+BEGIN_SRC C++
+std::shared_ptr<std::string> p1; // pointer to string
+std::shared_ptr<int> p2;         // pointer to int
+std::shared_ptr<std::vector<double>> p3; // points to a vector of double
+#+END_SRC
+
+In the examples above, the pointer is created but points to nullptr.
+
+** how to allocate memory for a std::shared_ptr
+
+To allocate memory at the same time we can use its constructor.
+It requires a pointer, and it sets the point to that memory:
+
+#+BEGIN_SRC C++
+std::shared_ptr<int> p1 (nullptr); // p1 points to nullptr
+std::shared_ptr<int> p2 (p); // p2 points to the same location as p
+#+END_SRC
+
+To allocate memory for a std::shared_ptr we must use *std::make_shared*. This function allocates memory for a given object and calls its constructor:
+
+Examples:
+
+#+BEGIN_SRC C++
+std::shared_ptr<int> p1;
+
+// allocate memory for p1, set it to value 10
+p1 = std::make_shared<int>(10);
+
+// create a pointer to a string
+std::shared_ptr<std::string> p2;
+
+p2 = std::make_shared<std::string>("abc"); 
+
+// both declare the pointer and allocate its memory
+auto p3 = std::make_shared<std::string>("def"); 
+#+END_SRC
+
+** how to release memory pointed by a std::shared_ptr
+
+In general, we don't need to worry about this. The destructor of the std::shared_ptr will take care of it for us.
+
+If we need to explicitly release the memory pointed by a pointer we can use *reset*.
+
+Example:
+
+#+BEGIN_SRC C++
+std::shared_ptr<int> p1;
+
+// allocate memory for p1, set it to value 10
+p1 = std::make_shared<int>(10);
+
+//...
+
+// release the memory pointed by p1
+p1.reset();
+
+#+END_SRC
+
+** how to use a std::shared_ptr
+
+A std::shared_ptr is used exactly the same as a regular pointer:
+
+#+BEGIN_SRC C++
+// allocate memory for p1, set it to value 10
+auto p1 = std::make_shared<int>(10);
+
+int i;
+i = *p1;
+std::cout << *p1 ;
+
+// assign to another pointer
+
+std::shared_ptr<int> p2;
+
+p2 = p1;
+#+END_SRC
+
+
+* Files
+
+Download, as usual, the files for the labs. Run cmake and load the file linked-list into Visual Studio.
+
+https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab08-files.zip
+
+
+* Part 1
+
+
+This file contains a class  a simple single-linked-list of strings called *link_list_string*. Inspect the code. The list links nodes of type *link_node_string*. 
+
+The node class *link_node_string* is a very simple class: it contains the string plus the pointer to the next node.
+
+The list class *link_list_string* has two pointers: head and tail. It also implements the following methods:
+
+Note that this class was implemented using direct memory management.
+
+
+| empty()        | returns true if list is empty, false otherwise |
+| push_front(st) | inserts a string at the front of the list      |
+| push_back(st)  | inserts a string at the end of the list        |
+| front()        | returns the string at the front of the list    |
+| back()         | returns the string at the front of the list    |
+
+It has two methods that are not complete:
+
+| print()    | prints the contents of the list to standard output |
+| exists(st) | returns true if the string st is in the list       |
+
+Your job is to write these two functions.
+
+Print should generate the following output. Assume that the list is composed of the strings "alpha", "beta", "gamma", "delta". 
+Calling print should output:
+
+#+BEGIN_EXAMPLE
+alpha -> beta -> gamma -> delta
+#+END_EXAMPLE
+
+Write the functions and test your code.
+
+* Part2: std::shared_ptr
+
+Download, as usual, the files for part 2 of the labs. Run cmake and load the file linked-list into Visual Studio.
+
+The code is the same as in Part 1. Your job is to rewrite it using smart pointers.
+
+For example. This is the declaration of *link_node_string*:
+
+#+BEGIN_SRC C++
+class link_node_string {
+    std::string data;
+    link_node_string *next;
+public:
+    link_node_string(std::string _st): data(_st) {};
+    link_node_string() {};
+
+    link_node_string* get_next();
+    void set_next(link_node_string *n);
+
+    void set(std::string _st);
+    std::string& get();
+};
+#+END_SRC
+
+It should be rewritten as:
+
+#+BEGIN_SRC C++
+class link_node_string {
+    std::string data;
+    std::shared_ptr<link_node_string> next;
+public:
+    link_node_string(std::string _st): data(_st) {};
+    link_node_string() {};
+
+    std::shared_ptr<link_node_string> get_next();
+    void set_next(std::shared_ptr<link_node_string> n);
+
+    void set(std::string _st);
+    std::string& get();
+};
+#+END_SRC
+
+You should also re-implement the methods print() and exists(st).
+
+Write your code and test it.
+
+* Questions
+
+1. Enumerate three advantages of std::shared_ptr pointers over regular pointers
+2. How many times did you use delete in part2 of your assignment
+3. Do you need to deallocate the memory of the list in its destructor? Why?

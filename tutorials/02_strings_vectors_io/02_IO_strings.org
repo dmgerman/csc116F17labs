@@ -1,0 +1,211 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: 
+#+CATEGORY: 
+#+PROPERTY: header-args: lang           :varname value
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+* Strings, Vectors and File I/O
+
+In this lab we will learn to use strings, vectors and read
+from a file
+
+* Download the files
+
+As with lab-01, download the files from 
+https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab02-files.zip
+and expand them into your h: drive.
+
+
+* Part 1: Using command line parameters
+
+As with lab01, download the sources code for this lab from here:
+
+Run cmake to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+
+For this program the name of the executable is ~read_file~. Load the solution ~read_file.sln~ into Visual Studio.
+
+Compile it and run it. You will see the following output
+
+[[file:images/usage.png]]
+
+** Command line parameters
+
+This program requires a filename when the program is run.
+
+You can do this by running the program from the command line (cygwin terminal, in the build directory). If ~read_file.exe~ does
+not exist, you first need to compile it.
+
+#+BEGIN_SRC sh
+read_file.exe  anystring
+#+END_SRC
+
+The output is:
+
+#+BEGIN_EXAMPLE
+File to read:  [anystring]
+#+END_EXAMPLE
+
+We will now indicate to Visual Studio what the command line arguments are to our program.
+
+In the /Solution Explorer/ right click on ~read_file~, and select properties:
+
+[[file:images/prop.png]]
+
+In properties, go to /Debugging-Command Line Arguments/ and change it to ~..\example.txt~, as shown below:
+
+[[file:images/commandLine.png]]
+
+Run the program again. It should now output:
+
+[[file:images/goodCommandLine.png]]
+
+** Modify the program 
+
+Modify the program to read the file name in the command line. This string is stored in the variable ~inputFileName~.
+
+The goal of your program is to read every line in the input file and invert it. In other words, if the input is:
+
+#+BEGIN_EXAMPLE
+This is the sea.
+And this is the end of the world.
+#+END_EXAMPLE
+
+Your program should output:
+
+#+BEGIN_SRC 
+.aes eht si sihT
+.dlrow eht fo dne eht si siht dnA
+#+END_SRC
+
+The following program will show you how to read a file. This program reads a file and outputs the lines.
+Study and use it to create yours. The major difference is that you need to reverse the strings.
+
+#+BEGIN_SRC C++ 
+// reading a text file
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main ()
+{
+    std::ifstream myfile;
+    myfile.open("inputfile.txt");
+
+    if (myfile.is_open()) {
+
+        std::string line;
+        while ( std::getline (myfile,line) ) {
+            std::cout << line << std::endl;
+        }
+        myfile.close();
+
+    } else {
+        std::cout << "Unable to open file"; 
+    }
+    return 0;
+}
+#+END_SRC
+
+** Test it
+
+Once you are satisfied with your solution, test your program by hand. 
+Then run the automatic tests (see part3 of the first lab for details).
+There are 5 tests in for this part.
+
+#+BEGIN_EXAMPLE
+Test project /home/dmg/git.dmg/csc116.public/tutorials/02_strings_vectors_io/solution/part1/build
+    Start 1: test01
+1/5 Test #1: test01 ...........................   Passed    0.04 sec
+    Start 2: test02
+2/5 Test #2: test02 ...........................   Passed    0.04 sec
+    Start 3: test03
+3/5 Test #3: test03 ...........................   Passed    0.04 sec
+    Start 4: test04
+4/5 Test #4: test04 ...........................   Passed    0.04 sec
+    Start 5: test05
+5/5 Test #5: test05 ...........................   Passed    0.05 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   0.20 sec
+#+END_EXAMPLE
+
+
+* Part2
+
+Now, go to part2 of the lab and do as before. Generate the Visual Studio files (again, see Part1 of Lab01 for details).
+
+Load the file ~invert_file.sln~ into Visual Studio.
+
+** Inverting the lines in the input file
+
+This time we are going invert the lines in the file. Your program should take the name of the program from the command
+line. 
+
+1. Each line should be output only once. It should output the first version of the line (according to the original order of the file).
+2. The lines should be output in inverse order
+
+Let us assume this is the input file:
+
+#+BEGIN_SRC 
+This is the Sea.
+And this is not.
+
+The line above is empty
+This is the Sea.
+Another line
+This is the Sea.
+Another line
+#+END_SRC
+
+It should output:
+
+#+BEGIN_SRC 
+Another line
+The line above is empty
+
+And this is not.
+This is the Sea.
+#+END_SRC
+
+** Hint:
+
+- Use a vector of strings to keep track of the lines.
+- You do not know how many lines are in the input file, therefore you need to 
+  add elements to the vector using ~push_back~.
+
+** How to use push_back
+
+Given the declaration:
+
+#+BEGIN_SRC C++
+std::vector<std::string> lines {}; // empty vector
+#+END_SRC
+
+One can insert a string ~st~, at the end of this vector, using:
+
+#+BEGIN_SRC C++
+lines.push_back(st);
+#+END_SRC
+
+This will increase the size of the vector by one.
+
+* Questions
+
+Answer the following questions:
+
+- In which position of the vector does ~push_back~ insert the new element?
+
+- What is the return value of ~std::getline as in:
+
+#+BEGIN_SRC C++ 
+std::getline (myfile,line)
+#+END_SRC
+
+

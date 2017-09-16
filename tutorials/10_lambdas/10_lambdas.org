@@ -1,0 +1,234 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: Templates
+#+CATEGORY: 
+#+PROPERTY: header-args:sql             :engine postgresql  :exports both :cmdline csc370
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+
+* Introduction
+
+A relatively new feature in C++ is the /anonymous function/, which is often called a /lambda expression/ (due
+to historical parallels to other languages). Anonymous functions can be defined inside of other code, and can, to
+some extent, interact with the scope in which they were defined.
+
+The program below gives a simple example of an anonymous function, which takes two integer arguments ~x~ and ~y~ and returns a float.
+
+#+BEGIN_SRC C++
+int main(){
+	
+	auto divide = [](int x, int y) -> float{
+		return x/( (float)y );
+	};
+	
+	std::cout << "1/2 = " << divide(1,2) << std::endl;
+	std::cout << "3/7 = " << divide(3,7) << std::endl;
+	
+	return 0;
+}
+#+END_SRC
+
+The notation ~[](int x, int y)~ defines a new anonymous function which takes arguments ~int x~ and ~int y~. The notation ~-> float~ indicates the return type.
+After the function is defined, it can be used like any other function with the ~()~ operator. Explictly stating the return type is not necessary
+in cases where it can be deduced. Consider the following function (note that a semicolon is required after the closing ~}~ character).
+
+#+BEGIN_SRC C++
+auto negate = [](int x){
+	return -x;
+};
+#+END_SRC
+
+The function ~negate~ takes an int ~x~ and returns an int. Since the compiler can determine the return type from the input and the code, it is not
+necessary to specify the return type.
+
+When a function is defined with the notation above and assigned to the variable, it can be treated like any other data. The exact type of a function
+variable, such as the ones above, is dependent on the argument and return types. For the ~divide~ function in the example above, the type is
+~std::function< float(int,int) >~, and for the ~negate~ function, the type is ~std::function< int(int) >~. In general, a function with return type
+~R~ and argument types ~A1, A2, A3...~ will have type ~std::function< R(A1, A2, A3...) >~.
+
+
+* Passing functions to functions
+
+The lightweight syntax for lambda expressions makes them useful for adding flexibility to operations like iterating over a vector. Consider
+the following functions to print every element of a vector, print every element plus six and print every element squared.
+#+BEGIN_SRC C++
+void print_vector_plain(std::vector<int> V){
+	for(auto x: V)
+		std::cout << x << " ";
+	std::cout << std::endl;
+}
+void print_vector_add_six(std::vector<int> V){
+	for(auto x: V)
+		std::cout << (x+6) << " ";
+	std::cout << std::endl;
+}
+void print_vector_squared(std::vector<int> V){
+	for(auto x: V)
+		std::cout << (x*x) << " ";
+	std::cout << std::endl;
+}
+#+END_SRC
+
+Both functions iterate over a vector and print out each element, potentially with a manipulation applied. By using lambda expressions,
+the manipulation can be separated into a function ~F~, which takes an int (the element) and returns the manipulated element.
+#+BEGIN_SRC C++
+void print_vector_manipulated(std::vector<int> V, std::function< int(int) > F){
+	for(auto x: V)
+		std::cout << F(x) << " ";
+	std::cout << std::endl;
+}
+#+END_SRC
+
+To use the ~print_vector_manipulated~ function, a separate function can be created to pass as the argument ~F~ for each case:
+#+BEGIN_SRC C++
+
+#include <functional>
+#include <vector>
+
+int main(){
+	std::vector<int> V {6, 10, 17};
+	
+	//Print unmodified
+	auto do_nothing = [](int x){ return x; } //Return x without modifying it
+	print_vector_manipulated(V, do_nothing);
+	
+	//Print with six added
+	auto add_six = [](int x){ return x+6; }
+	print_vector_manipulated(V, add_six);
+	
+	//Print squared
+	auto square = [](int x){ return x*x; }
+	print_vector_manipulated(V, square);
+	return 0;
+}
+#+END_SRC
+
+
+This separation of iteration and manipulation is useful in cases where iteration is difficult (e.g. if you are iterating over a linked list instead of a vector)
+or where iteration should only cover a particular subset of elements which might require complicated conditions (e.g. iterating over all elements of a vector which
+are divisible by 3 but not by 7). The following function ~apply_to_int_vector~ applies an arbitrary function (which returns nothing) to every element of a vector.
+
+#+BEGIN_SRC C++
+void apply_to_int_vector(std::vector<int> V, std::function< void(int) > F){
+	for(auto x: V)
+		F(x);
+}
+#+END_SRC
+
+The function above can be templated to allow its use with arbitrary vectors:
+#+BEGIN_SRC C++
+template <typename T>
+void apply_to_vector(std::vector<T> V, std::function< void(T) > F){
+	for(auto x: V)
+		F(x);
+}
+#+END_SRC
+
+Similarly, the following function will apply ~F~ to every third element of ~V~:
+#+BEGIN_SRC C++
+template <typename T>
+void apply_to_vector_every_third(std::vector<T> V, std::function< void(T) > F){
+	for(unsigned int i = 0; i < V.size(); i += 3)
+		F(x);
+}
+#+END_SRC
+
+Printing a vector can then be implemented following function:
+#+BEGIN_SRC C++
+template <typename T>
+void print_vector(std::vector<T> V){
+	auto print_element = [](T element){
+		std::cout << element << " ";
+	};
+	apply_to_vector(V, print_element);
+	std::cout << std::endl;
+}
+#+END_SRC
+To adapt the code above to print every third element, the call to ~apply_to_vector~ would be replaced with ~apply_to_vector_every_third~.
+
+* Capturing and Closures
+
+One major advantage of anonymous functions and lambda expressions is the ability to use the local variables of the scope in which the function is defined. Consider
+the following code, which uses the ~apply_to_vector~ function from above.
+
+#+BEGIN_SRC C++
+#include <functional>
+#include <vector>
+
+template <typename T>
+void apply_to_vector(std::vector<T> V, std::function< void(T) > F){
+	for(auto x: V)
+		F(x);
+}
+
+int main(){
+	std::vector<int> V {6, 10, 17, 100, 300, 200, -1, -2, -3};
+	
+	int count {};
+	auto count_positive = [&count](int element){
+		if(element > 0)
+			count++;
+	};
+	apply_to_vector<int>(V, count_positive);
+	std::cout << "Positive elements: " << count << std::endl;
+	
+	return 0;
+}
+#+END_SRC
+
+The notation ~[&count]~ in the lambda expression indicates that the local variable ~count~ should be useable inside the function, and should
+be incorporated by reference (so modifying the ~count~ variable in the function will modify the original in ~main~). Note that the ~apply_to_vector~
+function required an explicit template instantiation (hence the ~<int>~ notation in the function call). The variable ~count~ is said to be /captured/
+by the lambda function, and lambda functions which capture variables from a parent scope are examples of a functional concept called /closures/ (which are
+covered in more detail in a higher level course).
+
+The code below uses capturing to compute the minimum and maximum elements of a vector.
+#+BEGIN_SRC C++
+#include <functional>
+#include <vector>
+
+template <typename T>
+void apply_to_vector(std::vector<T> V, std::function< void(T) > F){
+	for(auto x: V)
+		F(x);
+}
+
+int main(){
+	std::vector<int> V {6, 10, 17, 100, 300, 200, -1, -2, -3};
+	
+	int min = V.at(0);
+	int max = V.at(0);
+	auto find_min_max = [&min, &max](int element){
+		if (element < min)
+			min = element;
+		if (element > max)
+			max = element;
+	};
+	apply_to_vector<int>(V, find_min_max);
+	std::cout << "Min: " << min << ", Max: " << max << std::endl;
+	
+	return 0;
+}
+#+END_SRC
+
+
+
+
+
+
+* Lab exercises
+As usual, code files and automated tests have been provided at [[https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab10-files.zip][https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab10-files.zip]].
+This lab has two parts. The first part, in ~part1.cpp~, requires writing a number of vector manipulations using lambda expressions and templates. Full instructions are contained
+in the comments in the file. The second part, in ~part2.cpp~, requires writing a transform function, which takes a vector and produces a new vector resulting from applying an operation
+to each element of the input vector. Both parts have automated tests. You are encouraged to study the expected output of the tests before starting your code so you can better understand
+the expected behavior of each function.
+
+* Questions
+
+1. In cases such as the ~apply_to_vector~ function above, why is it useful to separate the iteration part of the code from the operation performed on each element?
+2. Why is variable capturing more convenient than simply passing references to local variables into other functions as arguments?

@@ -1,0 +1,12 @@
+C++ is often considered to be a superset of C,
+but this is not strictly true.
+Most C code can easily be made to compile
+correctly in C++, but there are a few differences
+that cause some valid C code to be invalid or behave
+differently in C++.
+For example, C allows implicit conversion from void*
+to other pointer types, but C++ does not (for type safety
+reasons).
+Also, C++ defines many new keywords, such as new and class,
+which may be used as identifiers (for example, variable names)
+in a C program.

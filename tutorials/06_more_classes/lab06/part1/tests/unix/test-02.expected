@@ -1,0 +1,13 @@
+Reading matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 5 x 3
+M: 
+1 0 0 
+0 1 0 
+0 0 1 
+2 3 4 
+5 6 7 
+M is not diagonal.
+Unable to compute trace: Unable to compute trace of a non-square matrix

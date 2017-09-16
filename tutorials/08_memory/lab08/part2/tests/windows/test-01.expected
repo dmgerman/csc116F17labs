@@ -1,0 +1,8 @@
+Capitals:
+Tokyo -> Ottawa -> Washington -> London -> Madrid -> Amsterdam -> Mexico City -> Stockholm
+
+is Ottawa in the list? true
+is Brazilia in the list? false
+Print empty list:
+
+is anything in the list? false

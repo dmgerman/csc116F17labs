@@ -1,0 +1,101 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: 
+#+CATEGORY: 
+#+PROPERTY: header-args: lang           :varname value
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+* Matrices and Exceptions
+
+This lab contains several exercises involving matrices, which are implemented
+as nested vectors, along with some basic uses of exceptions and try/catch logic.
+
+The goal of this lab is to give you some experience working with matrices of the form
+used in Assignment 3, as well as to reinforce some problem solving skills before Midterm 1.
+
+* Download the files
+
+As with previous labs, download the files from 
+https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab04-files.zip
+and expand them into your h: drive.
+
+* Part 1: Matrices
+
+Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+
+The provided program for part 1 is called ~part1~, and contains a type ~matrix_type~ which is defined by the statement
+
+#+BEGIN_SRC C++ 
+typedef std::vector< std::vector< double > > matrix_type;
+#+END_SRC
+
+The ~matrix_type~ is therefore a vector containing row vectors, with the contents of each row having type ~double~.
+
+The ~part1.cpp~ file contains three functions for you to implement.
+ - The ~identity~ function constructs an N x N identity matrix.
+ - The ~hilbert~ function constructs an N x N Hilbert matrix. Recall that entry (i,j) of a Hilbert matrix is equal to 1/(i + j + 1). Note that you will have to adjust the formula to accommodate the 0-based indexing used in C++.
+ - The ~add_matrices~ function adds two matrices together and returns the result.
+
+The comments in ~part1.cpp~ contain additional details about each function.
+ 
+As usual, several automated tests have been provided, and should all pass once your solution is complete.
+
+* Part 2: More Matrices and Exceptions.
+
+Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+
+The executable for this part is called ~part2~ and is produced from the ~part2.cpp~ file.
+
+Like part 1, the ~part2.cpp~ file involves matrices. The first exercise in part 2 involves
+implementing more functions, and the second involves adding try/catch statements to handle
+an exception.
+
+*** Exercise 2A 
+
+The ~part2.cpp~ file contains two functions for you to implement. Unlike part 1, your functions
+must detect various error cases that may occur when inputs are invalid, and throw appropriate
+exceptions when such error cases occur.
+ - The ~trace~ function computes the trace (the sum of diagonal entries) of the provided matrix. The trace is only defined for square matrices, so your function must throw a ~std::domain_error~ with the message "Unable to compute trace of a non-square matrix" if the provided matrix is not square.
+ - The ~add_matrices~ function adds two matrices together and returns the result. You can use your part 1 code as the basis for this function. This version is expected to throw an ~std::domain_error~ with error message "Incompatible matrix dimensions" if the two provided input matrices do not have the same dimensions.
+
+As in part 1, the comments in ~part2.cpp~ contain more details about each function.
+
+After Exercise 2A is complete, the first three of the automated tests will pass. The last test should
+still fail, since it covers the material in Exercise 2B.
+
+*** Exercise 2B
+
+In Exercise 2A, you used ~throw~ statements to create exceptions. In Exercise 2B, you will use try/catch blocks
+to handle an exception.
+
+The ~read_matrix~ function in ~part2.cpp~ reads a matrix from standard input. If it is unable to do so, an ~std::runtime_error~ is thrown.
+In the provided ~main~ function, no attempt is made to handle any exceptions coming back from ~read_matrix~, so if an exception occurs, the program
+will be terminated by the operating system.
+
+Your task is to add try/catch blocks to ~main~ such that if ~read_matrix~ throws an ~std::runtime_error~, the error
+is caught and the program exits gracefully (with ~return 1;~) after printing out the error message. The message
+should be printed in the format ~"Error reading matrix: <message>"~, where ~<message>~ is the error message
+in the ~std::runtime_error~ object thrown from ~read_matrix~. For example, if ~read_matrix~ throws an exception with the message
+~Invalid matrix element~, the output produced by ~main~ should be ~"Error reading matrix: Invalid matrix element"~.
+
+You must modify ~main~ to implement your solution, and you are not permitted to modify ~read_matrix~.
+
+Once Exercise 2B is complete, all of the automated tests for Part 2 should pass.
+
+* Questions
+
+Answer the following questions:
+
+- The parameters to ~add_matrices~ (in both parts) have type ~const matrix_type&~. Why would this type be a better choice than the plain ~matrix_type~ type?
+
+- The ~print_matrix~ function in both parts uses "for-each" style loops (e.g. ~for (auto x: M)~)
+  instead of the more traditional index-based loops (e.g. ~for( i = 0; i < n; i++ )~). Can the ~add_matrices~ function be written
+  with for-each loops? Why or why not?
+ 
+
+

@@ -1,0 +1,23 @@
+Enter a sequence of integers, ending with -1: 
+Vector VI: 4 8 15 16 23 42 
+Enter a sequence of words: 
+Vector VS: Victoria Vancouver Saanich Nanaimo 
+
+print_vector_alternating: 4 15 23 
+
+double_vector_elements: VictoriaVictoria VancouverVancouver SaanichSaanich NanaimoNanaimo 
+
+negate_alternating: -4 8 -15 16 -23 42 
+
+print_vector_offset (offset 6): 10 14 21 22 29 48 
+
+print_vector_offset (offset 9): 13 17 24 25 32 51 
+
+sum_vector(VI): 108
+sum_vector(VS): VictoriaVancouverSaanichNanaimo
+
+sum_vector_templated(VI): 108
+sum_vector_templated(VS): VictoriaVancouverSaanichNanaimo
+
+longest_string(VS): Vancouver
+

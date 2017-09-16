@@ -1,0 +1,47 @@
+Reading first matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 4 x 3
+M1: 
+6 10 6 
+10 6 10 
+6 10 6 
+10 6 10 
+Reading second matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 4 x 3
+M2: 
+10 6 10 
+6 10 6 
+10 6 10 
+6 10 6 
+M1 == M2? false
+M1 != M2? true
+2*M1:
+12 20 12 
+20 12 20 
+12 20 12 
+20 12 20 
+3*M1:
+18 30 18 
+30 18 30 
+18 30 18 
+30 18 30 
+M1*4:
+24 40 24 
+40 24 40 
+24 40 24 
+40 24 40 
+M1+M2:
+16 16 16 
+16 16 16 
+16 16 16 
+16 16 16 
+M1-M2:
+-4 4 -4 
+4 -4 4 
+-4 4 -4 
+4 -4 4 

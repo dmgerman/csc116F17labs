@@ -1,0 +1,22 @@
+Enter a sequence of integers, ending with -1: 
+Vector VI: 4 8 15 16 23 42 
+Enter a sequence of words: 
+Vector VS: Victoria Vancouver Saanich Nanaimo 
+
+Negation of VI: -4 -8 -15 -16 -23 -42 
+
+VI + 6: 10 14 21 22 29 48 
+
+Lengths of elements of VS: 8 9 7 7 
+
+VS (doubled): VictoriaVictoria VancouverVancouver SaanichSaanich NanaimoNanaimo 
+
+Template tests: 
+Negation of VI: -4 -8 -15 -16 -23 -42 
+
+VI + 6: 10 14 21 22 29 48 
+
+Lengths of elements of VS: 8 9 7 7 
+
+VS (doubled): VictoriaVictoria VancouverVancouver SaanichSaanich NanaimoNanaimo 
+

@@ -1,0 +1,11 @@
+Enter initial hour: 
+Enter initial minute: 
+c.get_hour24() returns 10
+c.get_hour12() returns 10
+c.get_minute() returns 30
+c.get_time_string(true) returns 10:30
+c.get_time_string(false) returns 10:30am
+Enter hours to advance: 
+Enter minutes to advance: 
+Advancing c by 1 hours and 16 minutes.
+After advancing, the time is 11:46

@@ -1,0 +1,22 @@
+Enter a sequence of integers, ending with -1: 
+Vector VI: 100 200 600 900 106 116 111 
+Enter a sequence of words: 
+Vector VS: Monday Tuesday Wednesday Thursday Friday 
+
+Negation of VI: -100 -200 -600 -900 -106 -116 -111 
+
+VI + 6: 106 206 606 906 112 122 117 
+
+Lengths of elements of VS: 6 7 9 8 6 
+
+VS (doubled): MondayMonday TuesdayTuesday WednesdayWednesday ThursdayThursday FridayFriday 
+
+Template tests: 
+Negation of VI: -100 -200 -600 -900 -106 -116 -111 
+
+VI + 6: 106 206 606 906 112 122 117 
+
+Lengths of elements of VS: 6 7 9 8 6 
+
+VS (doubled): MondayMonday TuesdayTuesday WednesdayWednesday ThursdayThursday FridayFriday 
+

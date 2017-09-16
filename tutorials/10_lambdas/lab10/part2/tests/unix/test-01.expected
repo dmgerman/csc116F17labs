@@ -1,0 +1,22 @@
+Enter a sequence of integers, ending with -1: 
+Vector VI: 6 10 17 
+Enter a sequence of words: 
+Vector VS: Apple Raspberry Pear 
+
+Negation of VI: -6 -10 -17 
+
+VI + 6: 12 16 23 
+
+Lengths of elements of VS: 5 9 4 
+
+VS (doubled): AppleApple RaspberryRaspberry PearPear 
+
+Template tests: 
+Negation of VI: -6 -10 -17 
+
+VI + 6: 12 16 23 
+
+Lengths of elements of VS: 5 9 4 
+
+VS (doubled): AppleApple RaspberryRaspberry PearPear 
+

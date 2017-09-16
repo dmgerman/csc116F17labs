@@ -1,0 +1,26 @@
+Reading first matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 4 x 3
+M1: 
+6 10 6 
+10 6 10 
+6 10 6 
+10 6 10 
+Reading second matrix
+Enter the number of rows and columns: 
+Enter the elements of the matrix: 
+
+Successfully read a matrix with dimensions 4 x 3
+M2: 
+10 6 10 
+6 10 6 
+10 6 10 
+6 10 6 
+Sum of M1 and M2: 
+16 16 16 
+16 16 16 
+16 16 16 
+16 16 16 
+Error: Unable to compute trace of a non-square matrix

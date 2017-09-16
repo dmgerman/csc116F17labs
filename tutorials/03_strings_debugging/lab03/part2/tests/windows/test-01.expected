@@ -1,0 +1,7 @@
+Read 5 grades
+Original grades: 3 6 2 1 1 
+Average: 2.6
+Median: 2
+Grades with zeros removed: 3 6 2 1 1 
+Average (zeros excluded): 2.6
+Median (zeros excluded): 2

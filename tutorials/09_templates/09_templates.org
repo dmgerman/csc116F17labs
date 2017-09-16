@@ -1,0 +1,272 @@
+#+STARTUP: showall
+#+STARTUP: lognotestate
+#+TAGS:
+#+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
+#+DRAWERS: HIDDEN STATE
+#+TITLE: Templates
+#+CATEGORY: 
+#+PROPERTY: header-args:sql             :engine postgresql  :exports both :cmdline csc370
+#+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
+#+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
+#+PROPERTY: header-args:R               :results output  :colnames yes
+
+
+* Introduction
+
+Consider the function ~print_vector~ below, which prints every element of a vector of integers.
+
+#+BEGIN_SRC C++
+void print_vector( const std::vector<int>& V ){
+	for( int x: V )
+		std::cout << x << " ";
+	std::cout << std::endl;
+}
+#+END_SRC
+
+To print a vector of double values, or a vector of string values, the ~print_vector~ function can be overloaded:
+
+#+BEGIN_SRC C++
+void print_vector( const std::vector<double>& V ){
+	for( double x: V )
+		std::cout << x << " ";
+	std::cout << std::endl;
+}
+void print_vector( const std::vector<std::string>& V ){
+	for( std::string x: V )
+		std::cout << x << " ";
+	std::cout << std::endl;
+}
+#+END_SRC
+
+The overloaded versions are essentially identical to the original integer version, but must exist independently
+because each version of the function has differing parameter types. Having three essentially identical copies
+of the same code, as in the example above, creates a software engineering hazard: duplicated code is a serious maintainability issue.
+
+* Templates
+
+C++ pioneered the notion of /generic programming/, which allows the same code to be reused for different types of data. This lab covers
+a feature called /templates/, which allows a type name (or, in more advanced uses, other information) to be replaced with a placeholder
+when the code is written, and filled in automatically when the code is compiled. We can think of templates informally as a structured copy/paste
+mechanism which automatically duplicates functions and classes as needed to allow for different variations. 
+
+Using templates, all three versions of the ~print_vector~ function above can be collapsed into a single version, by using a placeholder name
+instead of the actual element type of the vector:
+
+#+BEGIN_SRC C++
+template<typename T>
+void print_vector( const std::vector<T>& V ){
+	for( T x: V )
+		std::cout << x << " ";
+	std::cout << std::endl;
+}
+#+END_SRC
+
+The notation ~template <typename T>~ creates a placeholder called ~T~, which can be used to stand in for a type. In the example above, ~T~ stands
+in for the element type of the vector (so any reference to an element of the vector should use the type ~T~). When the function is called, the placeholder
+is replaced with the element type of the actual argument. For example,
+
+#+BEGIN_SRC C++
+vector <int> V1 {1,2,3,4};
+print_vector(V1); //Call print_vector with "int" replacing T
+vector <double> V2 {1.2, 3.4, 5.6};
+print_vector(V2); //Call print_vector with "double" replacing T
+#+END_SRC
+
+The compiler can often deduce the correct type for the placeholder T based on context. In the examples above, the compiler can determine the type of ~T~
+automatically since the provided vector uses ~T~ as its element type. 
+
+It is also possible to explicitly provide the template parameter ~T~ using angle bracket notation.
+
+#+BEGIN_SRC C++
+vector <int> V1 {1,2,3,4};
+print_vector<int>(V1); //Call print_vector with "int" replacing T
+vector <double> V2 {1.2, 3.4, 5.6};
+print_vector<double>(V2); //Call print_vector with "double" replacing T
+#+END_SRC
+
+Normal C++ style is to avoid using the explicit template argument unless necessary. If the compiler is able to deduce the type ~T~ without manual intervention,
+it is usually better to avoid using angle brackets. If the compiler gives an error such as "couldn't deduce template parameter", it may be necessary to explicitly
+provide the placeholder type.
+
+Placeholder types can be used in any context where a type name is needed when defining a function or class. For example, consider the overloaded ~max~ functions below.
+
+#+BEGIN_SRC C++
+int max(int a, int b){
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+double max(double a, double b){
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+#+END_SRC
+These functions can be collapsed into one version using templates:
+#+BEGIN_SRC C++
+template<typename T>
+T max(T a, T b){
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+#+END_SRC
+
+It is also possible to define a template with multiple placeholders (e.g. ~template <typename T, typename U, typename V>~).
+
+* Templates and collections
+
+Consider the following function to return the first element of a vector.
+#+BEGIN_SRC C++
+int first_element( const std::vector<int>& V ){
+	if (V.size() == 0)
+		throw std::runtime_error("Can't retrieve first element of empty sequence");
+	int v = V.front();
+	return v;
+}
+#+END_SRC
+
+The ~first_element~ function can generalized to vectors of any type using templates.
+#+BEGIN_SRC C++
+template<typename T>
+T first_element( const std::vector<T>& V ){
+	if (V.size() == 0)
+		throw std::runtime_error("Can't retrieve first element of empty sequence");
+	T v = V.front();
+	return v;
+}
+#+END_SRC
+
+Note that the placeholder type ~T~ is used to create a local variable, and to define the return type of the function.
+The ~front()~ method, which returns the first element of the sequence, is also found in the ~std::list~ data structure.
+To generalize ~first_element~ to ~std::list~ as well as ~std::vector~, it can be overloaded:
+#+BEGIN_SRC C++
+template<typename T>
+T first_element( const std::vector<T>& V ){
+	if (V.size() == 0)
+		throw std::runtime_error("Can't retrieve first element of empty sequence");
+	T v = V.front();
+	return v;
+}
+template<typename T>
+T first_element( const std::list<T>& V ){
+	if (V.size() == 0)
+		throw std::runtime_error("Can't retrieve first element of empty sequence");
+	T v = V.front();
+	return v;
+}
+#+END_SRC
+However, this creates the same maintainability problem as before, since both versions are essentially the same.
+Templates can be used to collapse these functions into a single function, but the remedy is not as simple as before, 
+since the placeholder ~T~ must refer to the entire data structure instead of just the element.
+Collections in C++, including ~vector~ and ~list~, use typedefs to conveniently refer to the types they contain.
+For ~std::vector~ and ~std::list~, the type of the sequence elements is called ~value_type~. For example, ~std::list<int>::value_type~ will
+be ~int~, and ~std::vector<double>::value_type~ will be ~double~. We can use this to develop a templated version of ~first_element~ that applies
+to both ~vector~ and ~list~:
+#+BEGIN_SRC C++
+template<typename T>
+typename T::value_type first_element( const T& V ){
+	if (V.size() == 0)
+		throw std::runtime_error("Can't retrieve first element of empty sequence");
+	typename T::value_type v = V.front();
+	return v;
+}
+#+END_SRC
+In this version, the placeholder ~T~ refers to the entire collection (e.g. ~std::list<std::string>~ or ~std::vector<float>~) instead of just the element
+type of the collection. Since the function must return a single element, it is necessary to know the element type of whatever sequence is provided, so ~T::value_type~
+is used as the return type (and the type of the local variable ~v~)
+Note that to use ~T::value_type~ as a type, it must be preceded by the keyword ~typename~ as shown above.
+
+For ~vector~, ~list~ and ~set~, the type ~value_type~ is defined to be the element type of the sequence. For ~map~, the types ~key_type~ and ~mapped_type~
+are used to refer to the type of the keys and values, respectively.
+
+* Templates and classes
+
+Templates can also be used to define placeholder types for use with classes. This is especially useful for defining data structures which can work
+with different element types. Consider the classes ~IntAdder~ and ~StringAdder~ below, which implement simple data structures to sum up ints and strings, respectively.
+#+BEGIN_SRC C++
+class IntAdder{
+public:
+	IntAdder(): sum{} {
+	}
+	void add(int i){
+		sum = sum + i;
+	}
+	int get_sum(){
+		return sum;
+	}
+private:
+	int sum;
+};
+class StringAdder{
+public:
+	StringAdder(): sum{} {
+	}
+	void add(std::string i){
+		sum = sum + i;
+	}
+	std::string get_sum(){
+		return sum;
+	}
+private:
+	std::string sum;
+};
+#+END_SRC
+
+These two classes could be used in code such as the following.
+#+BEGIN_SRC C++
+IntAdder A;
+StringAdder B;
+A.add(6);
+A.add(10);
+B.add("Hello ");
+B.add("World");
+std::cout << B.get_sum() << " " << A.get_sum() << std::endl;
+#+END_SRC
+Since both classes contain the same core functionality, and the only difference between their implementations is the particular element type, the classes
+can be collapsed into a single class by using templates:
+#+BEGIN_SRC C++
+template<typename T>
+class Adder{
+public:
+	Adder(): sum{} {
+	}
+	void add(T i){
+		sum = sum + i;
+	}
+	T get_sum(){
+		return sum;
+	}
+private:
+	T sum;
+};
+#+END_SRC
+The templated class could then be used in place of the original classes in the example above:
+#+BEGIN_SRC C++
+Adder<int> A;
+Adder<std::string> B;
+A.add(6);
+A.add(10);
+B.add("Hello ");
+B.add("World");
+std::cout << B.get_sum() << " " << A.get_sum() << std::endl;
+#+END_SRC
+
+
+
+* Lab exercises
+As usual, code files and automated tests have been provided at [[https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab09-files.zip][https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab09-files.zip]]. For this lab, there is only one tester, but several independent programs, each containing a task to implement.
+Except for part 4, all of the tests pass already. Your task is to adapt the code in the files provided to use templates, instead of duplicated code, and ensure that the tests
+continue to pass. Each part is contained in a different .cpp file. The files are as follows:
+ - ~part1.cpp~: Write a templated function to add up the elements of a vector
+ - ~part2.cpp~: Write a templated function to add up the elements of any collection
+ - ~part3.cpp~: Write a templated function to identify all keys in a map which map to a given value.
+ - ~part4.cpp~: Implement a simple stack (based on a vector) which can contain elements of any type.
+
+* Questions
+
+1. Why is code duplication such a hazard to software maintainability?
+2. How can generic programming, and particularly generic data structures, improve productivity of programmers?

@@ -1,0 +1,6 @@
+int vector: 6 10 17 
+Sum: 33
+float vector: 1.16 1.11 1.06 3.71 
+Sum: 7.04
+string vector: Hello   World 
+Sum: Hello World

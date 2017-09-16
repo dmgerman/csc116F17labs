@@ -1,0 +1,8 @@
+Enter a time: 
+You entered "22:30"
+c1.get_time_string(true) returns 22:30
+c1.get_time_string(false) returns 10:30pm
+Enter another time: 
+You entered "1:35"
+Advancing c1 by 1 hours and 35 minutes.
+After advancing, the time is 00:05

@@ -1,0 +1,23 @@
+Enter a sequence of integers, ending with -1: 
+Vector VI: 6 10 17 
+Enter a sequence of words: 
+Vector VS: Apple Raspberry Pear 
+
+print_vector_alternating: 6 17 
+
+double_vector_elements: AppleApple RaspberryRaspberry PearPear 
+
+negate_alternating: -6 10 -17 
+
+print_vector_offset (offset 6): 12 16 23 
+
+print_vector_offset (offset 9): 15 19 26 
+
+sum_vector(VI): 33
+sum_vector(VS): AppleRaspberryPear
+
+sum_vector_templated(VI): 33
+sum_vector_templated(VS): AppleRaspberryPear
+
+longest_string(VS): Raspberry
+
