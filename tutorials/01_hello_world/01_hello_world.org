@@ -4,10 +4,11 @@
 #+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
 #+DRAWERS: HIDDEN STATE
 #+TITLE: Lab 01: Hello world tutorial
-#+CATEGORY: 
+#+CATEGORY:
 #+PROPERTY: header-args: lang           :varname value
 #+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
 #+PROPERTY: header-args:R               :results output
+#+OPTIONS: ^:nil _:nil
 
 
 * Objective
@@ -17,12 +18,12 @@ The objectives of this lab are:
 1. learn to use Visual Studio
 2. learn to use the std::vector class
 
-* Download the cmake files 
+* Download the cmake files
 
 1. Download the following files:
-   https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab01-files.zip
-2. Uncompress the files. Make sure you know where you have decompressed them.
+https://github.com/etcwilde/csc116F17labs/raw/master/tutorials/01_hello_world/files/lab01.zip
 
+2. Uncompress the files. Make sure you know where you have decompressed them.
 
 * Part 1: hello world
 
@@ -30,13 +31,13 @@ The first thing we need is to create the project files needed by our compiler.
 We are going to use a program called cmake that simplifies this process and makes it
 portable across platforms and compilers.
 
-0. Open a Cygwin64 terminal. You can know the current directory using the command ~pwd~, and change directories
-using ~cd~ followed by the directory where you want to go. 
+0. Open a GitBash terminal. You can know the current directory using the command ~pwd~, and change directories
+using ~cd~ followed by the directory where you want to go.
 
-Using ~cd~ change to the directory where you uncompressed the lab files. You can use the key ~<TAB>~ to complete 
+Using ~cd~ change to the directory where you uncompressed the lab files. You can use the key ~<TAB>~ to complete
 filenames and directories.
 
-Go to the subdirectory called ~part1~. You should  have two files: 
+Go to the subdirectory called ~part1~. You should  have two files:
 
 #+BEGIN_EXAMPLE
 CMakeLists.txt
@@ -50,7 +51,7 @@ hello.cpp
 1. Make sure you have the ~CMakeLists.txt~ and ~helloworld.cpp~ files in the current directory. You can use the
 command ~ls~ to inspect the contents of the current directory.
 
-The CMakeLists.txt file is very simple: 
+The CMakeLists.txt file is very simple:
 
 #+BEGIN_SRC cmake
 cmake_minimum_required(VERSION 2.8.9)
@@ -63,7 +64,7 @@ ENDIF(CMAKE_COMPILER_IS_GNUCC)
 add_executable(helloword hello.cpp)
 #+END_SRC
 
-The important line to consider is the "add_executable". It tells the compiler to create an executable called /helloworld/ 
+The important line to consider is the ~add_executable~. It tells the compiler to create an executable called /helloworld/
 using the source code in /hello.cpp/
 
 2. Run the following commands:
@@ -71,7 +72,7 @@ using the source code in /hello.cpp/
 #+BEGIN_SRC sh
 mkdir build
 cd build
-cmake .. -G 'Visual Studio 14 2015'
+cmake .. -G 'Visual Studio 15 2017'
 #+END_SRC
 
 3. The result is various files:
@@ -92,7 +93,7 @@ Run Microsoft Visual Studio 2015.
 
 3. Using the solution explorer, open the file /hello.cpp/. Simply double-click on the filename. See below:
 
-[[findHello.png]]
+[[file:findHello.png]]
 
 4. At this point you should be looking at something like this:
 
@@ -101,7 +102,7 @@ Run Microsoft Visual Studio 2015.
 
 5. As in C, C++ requires two states: compilation and linking. In Visual Studio both of these steps are encapsulated in a process call /Build/. In our case the Solution and  the project "helloworld" are the same.
 
-Build the solution by choosing /Build-Build Solution/ from the menu.
+Build the solution by choosing /Build/ \rightarrow /Build Solution/ from the menu.
 
 In the output window you will see a message that says your build was successful:
 
@@ -109,11 +110,11 @@ In the output window you will see a message that says your build was successful:
 
 6. Run the solution:
 
-Select /Debug-Start without Debugging/ to run the program. This is your first program in C++.
+Select /Debug/ \rightarrow /Start without Debugging/ to run the program. This is your first program in C++.
 
 
 
-Note that if you use /Debug-Start Debugging/ the terminal will flash in front of you and disappear. See this question-and answer-in Stack Overflow: 
+Note that if you use /Debug/ \rightarrow /Start Debugging/ the terminal will flash in front of you and disappear. See this question-and answer-in Stack Overflow:
 
 http://stackoverflow.com/questions/1775865/preventing-console-window-from-closing-on-visual-studio-c-c-console-applicatio
 
@@ -130,18 +131,18 @@ Go now to the directory ~part2~ of the materials. As you did with ~part1~:
 #+BEGIN_SRC sh
 mkdir build
 cd build
-cmake .. -G 'Visual Studio 14 2015'
+cmake .. -G 'Visual Studio 15 2017'
 #+END_SRC
 
 
 2. load the solution ~numbers.sln~ into Visual Studio
 3. select numbers as the default  solution
 
-** Modify the program. 
+** Modify the program.
 
 Edit the file ~numbers.cpp~. Make it print the numbers from 0 to 9 (inclusive), one per line. Use a ~for~ loop for that.
 
-- Make sure you use a constant at the top of your program called ~MAX_NUMBER~. Declare it 
+- Make sure you use a constant at the top of your program called ~MAX_NUMBER~. Declare it
 ~const int~
 
 - *Question* In this program you have declared two variables: ~MAX_NUMBER~ and the counter for the for-loop.
@@ -162,7 +163,7 @@ Go now to the directory ~part3~ of the materials. As you did with ~part1~:
 #+BEGIN_SRC sh
 mkdir build
 cd build
-cmake .. -G 'Visual Studio 14 2015'
+cmake .. -G 'Visual Studio 15 2017'
 #+END_SRC
 
 
@@ -178,11 +179,11 @@ These mechanism is the one that we will use to test your assignments.
 
 [[file:runtests.png]]
 
-2. You will get a bunch of errors. Select the Output Tab of the /Error List/ window. 
+2. You will get a bunch of errors. Select the Output Tab of the /Error List/ window.
 
 [[file:errors.png]]
 
-As you can see, the program failed all 5 tests. 
+As you can see, the program failed all 5 tests.
 
 ** Modify the program
 
@@ -192,7 +193,7 @@ how  many integers are there, but you should read until there are no more intege
 Your program should:
 
 - Print how many integers you read
-- Print the sume of all the integers read.
+- Print the sum of all the integers read.
 
 For example, for the following input:
 
@@ -207,7 +208,7 @@ Read 5 integers
 Sum 37
 #+END_EXAMPLE
 
-- Use ~std::cin >> variable~ to read each integer. 
+- Use ~std::cin >> variable~ to read each integer.
 - ~std::cin >> variable~ will return false when no more integers can be read. Stop at that moment
 - When you run the program a "terminal" will appear. You can start typing integers. White space (tabs and new lines)
 are considered separators between the integers. To stop adding numbers:
@@ -228,9 +229,9 @@ When your program is completed, you should get, in the /Output/ window a message
 
 
 If your program does not pass the tests, you can inspect their output by looking at the files ~*.out~ in the build directory.
-These files should be identical to the files ~*.expected~ found in the directory ~tests~. 
+These files should be identical to the files ~*.expected~ found in the directory ~tests~.
 
-You can inspect any of these files. 
+You can inspect any of these files.
 
 #+BEGIN_SRC sh
 cat test_01.out
@@ -242,14 +243,14 @@ I have modified my program to make it fail during test 5:
 
 [[file:fail-test5.png]]
 
-*Warning Make sure you run the following commands in the cygwin64 Terminal, in the directory build of part3 of the lab.*
+*Warning Make sure you run the following commands in the GitBash Terminal, in the directory build of part3 of the lab.*
 
 *** Finding out what the problem is
 
 To find what the program output was simply inspect the corresponding output file. In my case, this can be done with the command (you can also
 open ~test-05.out~ in an editor.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 cat test-05.out
 #+END_SRC
 
@@ -263,7 +264,7 @@ Sum 1
 The expected output is located in the file ~tests/test-05.expected~ of the main directory of the lab. You can either open the file
 in an editor or type:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 cat ../tests/test-05.expected
 #+END_SRC
 
@@ -278,16 +279,16 @@ As you can see, my Sum is 1 and the expected -1.
 
 *** Running your program from the command line
 
-This file was created with the following command line. 
+This file was created with the following command line.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 ./readnumbers.exe < ../tests/test-05.in > test-05.out
 #+END_SRC
 
 You can run the executable without the ">" to see the output of your command:
 
-#+BEGIN_SRC 
-./readnumbers.exe < ../tests/test-05.in 
+#+BEGIN_SRC
+./readnumbers.exe < ../tests/test-05.in
 #+END_SRC
 
 *** How to compare the outputs
@@ -295,14 +296,14 @@ You can run the executable without the ">" to see the output of your command:
 We use diff to compare outputs. When diff outputs nothing, the files are identical and the test is passed:
 
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 ./readnumbers.exe < ../tests/test-05.in  > ../tests/test-05.out
 diff  ../tests/test-05.expected  ../tests/test-05.out
 #+END_SRC
 
 which outputs:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 2c2
 < Sum -1
 ---
@@ -327,13 +328,11 @@ These are the contents of the ~LastTest.log~ regarding test-05:
 
 * Questions:
 
-Answer the following questions. 
+Answer the following questions.
 
 1. Part2. In your solution program you have declared two variables: ~MAX_NUMBER~ and the counter for the for-loop.
-   Can these variables be declared ~auto~? 
+   Can these variables be declared ~auto~?
 
 2. Part3. What is the expected output of test-03?
 
 Hand the answers to your lab instructor.
-
-
