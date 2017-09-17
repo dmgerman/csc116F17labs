@@ -3,8 +3,8 @@
 #+TAGS:
 #+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
 #+DRAWERS: HIDDEN STATE
-#+TITLE: 
-#+CATEGORY: 
+#+TITLE:
+#+CATEGORY:
 #+PROPERTY: header-args: lang           :varname value
 #+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
 #+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
@@ -17,7 +17,7 @@ from a file
 
 * Download the files
 
-As with lab-01, download the files from 
+As with lab01, download the files from
 https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab02-files.zip
 and expand them into your h: drive.
 
@@ -65,7 +65,7 @@ Run the program again. It should now output:
 
 [[file:images/goodCommandLine.png]]
 
-** Modify the program 
+** Modify the program
 
 Modify the program to read the file name in the command line. This string is stored in the variable ~inputFileName~.
 
@@ -78,7 +78,7 @@ And this is the end of the world.
 
 Your program should output:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 .aes eht si sihT
 .dlrow eht fo dne eht si siht dnA
 #+END_SRC
@@ -86,7 +86,7 @@ Your program should output:
 The following program will show you how to read a file. This program reads a file and outputs the lines.
 Study and use it to create yours. The major difference is that you need to reverse the strings.
 
-#+BEGIN_SRC C++ 
+#+BEGIN_SRC C++
 // reading a text file
 #include <iostream>
 #include <fstream>
@@ -106,7 +106,7 @@ int main ()
         myfile.close();
 
     } else {
-        std::cout << "Unable to open file." << std::endl; 
+        std::cout << "Unable to open file." << std::endl;
     }
     return 0;
 }
@@ -114,7 +114,7 @@ int main ()
 
 ** Test it
 
-Once you are satisfied with your solution, test your program by hand. 
+Once you are satisfied with your solution, test your program by hand.
 Then run the automatic tests (see part3 of the first lab for details).
 There are 5 tests in for this part.
 
@@ -146,14 +146,14 @@ Load the file ~invert_file.sln~ into Visual Studio.
 ** Inverting the lines in the input file
 
 This time we are going invert the lines in the file. Your program should take the name of the program from the command
-line. 
+line.
 
 1. Each line should be output only once. It should output the first version of the line (according to the original order of the file).
 2. The lines should be output in inverse order
 
 Let us assume this is the input file:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 This is the Sea.
 And this is not.
 
@@ -166,7 +166,7 @@ Another line
 
 It should output:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 Another line
 The line above is empty
 
@@ -177,7 +177,7 @@ This is the Sea.
 ** Hint:
 
 - Use a vector of strings to keep track of the lines.
-- You do not know how many lines are in the input file, therefore you need to 
+- You do not know how many lines are in the input file, therefore you need to
   add elements to the vector using ~push_back~.
 
 ** How to use push_back
@@ -204,7 +204,7 @@ Answer the following questions:
 
 - What is the return value of ~std::getline as in:
 
-#+BEGIN_SRC C++ 
+#+BEGIN_SRC C++
 std::getline (myfile,line)
 #+END_SRC
 
