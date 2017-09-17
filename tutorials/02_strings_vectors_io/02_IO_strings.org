@@ -21,10 +21,7 @@ As with lab01, download the files from
 https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab02-files.zip
 and expand them into your h: drive.
 
-
 * Part 1: Using command line parameters
-
-As with lab01, download the sources code for this lab from here:
 
 Run cmake to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
 
@@ -208,7 +205,5 @@ Answer the following questions:
 - What is the return value of ~std::getline as in:
 
 #+BEGIN_SRC C++
-std::getline (myfile,line)
+std::getline (myfile, line)
 #+END_SRC
-
-
