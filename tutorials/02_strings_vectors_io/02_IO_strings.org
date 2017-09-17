@@ -97,6 +97,7 @@ int main ()
     std::ifstream myfile;
     myfile.open("inputfile.txt");
 
+
     if (myfile.is_open()) {
 
         std::string line;
@@ -106,6 +107,8 @@ int main ()
         myfile.close();
 
     } else {
+        // std::cerr is usually better for errors,
+        // but it won't work with the test so use std::cout
         std::cout << "Unable to open file." << std::endl;
     }
     return 0;
