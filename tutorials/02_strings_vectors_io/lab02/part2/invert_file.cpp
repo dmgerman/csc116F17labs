@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
         std::cout << "Usage " << argv[0] << " <filename>" << std::endl;
         exit(1);
     }
-    std::string inputFileName = argv[1];
+    std::string const inputFileName{ argv[1] };
 
     // write your solution here
 
