@@ -18,7 +18,7 @@ from a file
 * Download the files
 
 As with lab-01, download the files from 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab02-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab02-files.zip
 and expand them into your h: drive.
 
 
