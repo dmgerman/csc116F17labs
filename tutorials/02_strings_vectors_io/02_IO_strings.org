@@ -202,7 +202,7 @@ Answer the following questions:
 
 - In which position of the vector does ~push_back~ insert the new element?
 
-- What is the return value of ~std::getline as in:
+- What is the return value of ~std::getline~ as in:
 
 #+BEGIN_SRC C++
 std::getline (myfile, line)
