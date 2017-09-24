@@ -3,8 +3,8 @@
 #+TAGS:
 #+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
 #+DRAWERS: HIDDEN STATE
-#+TITLE: 
-#+CATEGORY: 
+#+TITLE:
+#+CATEGORY:
 #+PROPERTY: header-args: lang           :varname value
 #+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
 #+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
@@ -17,7 +17,7 @@ with strings and vectors.
 
 * Download the files
 
-As with previous labs, download the files from 
+As with previous labs, download the files from
 https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab03-files.zip
 and expand them into your h: drive.
 
@@ -109,7 +109,7 @@ the input string "Hello World", the breakpoint is triggered at iteration 0 of th
 
 To continue execution after the break, press the /Continue/ button in the toolbar or Debug menu (or use the F5 key). The breakpoint will
 be triggered again on every other iteration of the loop until either the program ends or the breakpoint is deleted. This allows you
-to watch the progression of the ~uppercase~ and ~lowercase~ counters to detect the point when the error occurs. 
+to watch the progression of the ~uppercase~ and ~lowercase~ counters to detect the point when the error occurs.
 
 The /Stop Debugging/ entry in the Debug menu will end the debugging session and return to the usual Visual Studio display.
 
@@ -147,7 +147,7 @@ statistics
 As provided, the program reads a set of grade values from standard input and calls functions to compute each of the above statistics from
 the vector of input data. Each function is empty in the provided code.
 
-** Modify the Program 
+** Modify the Program
 
 Modify the program to implement the ~compute_mean~, ~compute_median~ and ~delete_zeros~ functions, which
 are empty in the provided code. Documentation on the expected behavior of each function is available
@@ -155,7 +155,7 @@ in the comments above each function.
 
 ** Deleting elements of a vector
 
-The ~erase~ method of a vector will remove an element at any position (and move the remaining elements to fill the missing space). 
+The ~erase~ method of a vector will remove an element at any position (and move the remaining elements to fill the missing space).
 To remove a single element at index ~i~, a call like the following can be used
 
 #+BEGIN_EXAMPLE
@@ -212,10 +212,7 @@ Answer the following questions:
   be more likely to produce bug-free code than the index-based for loop used in the provided code?
 
 - Consider the ~delete_zeros~ function from part 2:
-#+BEGIN_SRC C++ 
-void delete_zeros( std::vector<int>& V )
+#+BEGIN_SRC C++
+void delete_zeros( std::vector<int> & V )
 #+END_SRC
-  Why is the argument V passed as type ~std::vector<int>&~ instead of ~std::vector<int>~?
- 
-
-
+  Why is the argument V passed as type ~std::vector<int>&~ instead of ~std::vector<int>~ or ~const std::vector<int> &~?
