@@ -29,7 +29,7 @@ void count_case(std::string const & s, int & uppercase, int & lowercase)
     lowercase = 0;
     for(unsigned int i {0}; i < s.length(); i++)
     {
-        char c { s.at(i) };
+        char const c { s.at(i) };
         if (isupper(c))
         {
             uppercase++;
@@ -47,7 +47,7 @@ void count_case(std::string const & s, int & uppercase, int & lowercase)
 
    The function below contains an off-by-one error.
 */
-std::string remove_uppercase( std::string s )
+std::string remove_uppercase( std::string const & s)
 {
     std::string output {};
     for(unsigned int i {0}; i <= s.length(); i++)
