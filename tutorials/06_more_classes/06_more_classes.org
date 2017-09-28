@@ -25,7 +25,7 @@ from ~matrix.cpp~ into part 2 to reuse them.
 * Download the files
 
 As with previous labs, download the files from 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab06-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab06-files.zip
 and expand them into your h: drive.
 
 * Part 1: The Basic Interface of the Matrix class
