@@ -21,12 +21,12 @@ used in Assignment 3, as well as to reinforce some problem solving skills before
 * Download the files
 
 As with previous labs, download the files from 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab04-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab04-files.zip
 and expand them into your h: drive.
 
 * Part 1: Matrices
 
-Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+Run cmake as usual to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
 
 The provided program for part 1 is called ~part1~, and contains a type ~matrix_type~ which is defined by the statement
 
