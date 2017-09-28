@@ -222,7 +222,7 @@ int main(){
 
 
 * Lab exercises
-As usual, code files and automated tests have been provided at [[https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab10-files.zip][https://github.com/dmgerman/csc116/blob/master/tutorials/files/lab10-files.zip]].
+As usual, code files and automated tests have been provided at [[https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/files/lab10-files.zip][https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/files/lab10-files.zip]].
 This lab has two parts. The first part, in ~part1.cpp~, requires writing a number of vector manipulations using lambda expressions and templates. Full instructions are contained
 in the comments in the file. The second part, in ~part2.cpp~, requires writing a transform function, which takes a vector and produces a new vector resulting from applying an operation
 to each element of the input vector. Both parts have automated tests. You are encouraged to study the expected output of the tests before starting your code so you can better understand
