@@ -27,12 +27,12 @@ that the time is always valid. Your task in parts 1 and 2 below is to implement 
 * Download the files
 
 As with previous labs, download the files from 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab05-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab05-files.zip
 and expand them into your h: drive.
 
 * Part 1: Implementing the Clock interface
 
-Run cmake to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
+Run cmake to create the Visual Studio configuration files. See Part1 of [[https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/01_hello_world/01_hello_world.org][Lab01]] for details how to do it.
 
 The provided program for part 1 is called ~part1~, and contains the definition of a class ~Clock~ that has a number of methods which
 are missing code. To pass the part 1 tests, you must correctly implement all of the missing methods except the constructor which takes an argument of type ~std::string~ (this
