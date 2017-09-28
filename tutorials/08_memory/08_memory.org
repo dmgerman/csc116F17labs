@@ -203,7 +203,7 @@ p2 = p1;
 
 Download, as usual, the files for the labs. Run cmake and load the file linked-list into Visual Studio.
 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab08-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab08-files.zip
 
 
 * Part 1
