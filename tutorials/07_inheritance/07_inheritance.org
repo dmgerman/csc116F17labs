@@ -17,7 +17,7 @@ based on another one. The new class (called the /derived/ class) inherits all th
 (its /base/ class).
 
 As with previous labs, download the files from 
-https://github.com/dmgerman/csc116/raw/master/tutorials/files/lab07-files.zip
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab07-files.zip
 and expand them into your h: drive.
 
 * Part 1
