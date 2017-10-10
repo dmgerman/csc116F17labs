@@ -31,7 +31,7 @@ Run cmake as usual to create the Visual Studio configuration files. See Part1 of
 The provided program for part 1 is called ~part1~, and contains a type ~matrix_type~ which is defined by the statement
 
 #+BEGIN_SRC C++ 
-typedef std::vector< std::vector< double > > matrix_type;
+using matrix_type = std::vector< std::vector< double > >;
 #+END_SRC
 
 The ~matrix_type~ is therefore a vector containing row vectors, with the contents of each row having type ~double~.

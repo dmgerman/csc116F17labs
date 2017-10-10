@@ -9,7 +9,7 @@
 #include <vector>
 
 // Define a type matrix_type which is a vector of vectors containing doubles.
-typedef std::vector< std::vector< double > > matrix_type;
+using matrix_type = std::vector< std::vector< double > >;
 
 /* Functions to complete (Exercise 2A) */
 
