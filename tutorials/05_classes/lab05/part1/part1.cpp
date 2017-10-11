@@ -68,7 +68,7 @@ public:
 		  
 	   Hint: The int_to_string() function defined in the private section below may be useful here.
 	*/
-	std::string get_time_string( bool format24 = true ){
+	std::string get_time_string( bool format24 = true ) const{
 		/* Your code here */
 		return "";
 	}
@@ -76,7 +76,7 @@ public:
 	/* get_hour24()
 	   Return the current hour in 24-hour notation.
 	*/
-	int get_hour24(){
+	int get_hour24() const{
 		return hour;
 	}
 	/* get_hour12()
@@ -85,21 +85,21 @@ public:
 	   If the current hour is between 1 and 12 (inclusive), return it directly.
 	   If the current hour is between 13 and 23 (inclusive), return the current hour minus 12.
 	*/
-	int get_hour12(){
+	int get_hour12() const{
 		/* Your code here */
 		return 0;
 	}
 	/* get_minute()
 	   Return the current minute.
 	*/
-	int get_minute(){
+	int get_minute() const{
 		return minute;
 	}
 	/* is_pm()
 	   Returns true if the current time should be followed by "pm" in
 	   12-hour notation. Note that midnight is 12:00am and noon is 12:00pm.
 	*/
-	bool is_pm(){
+	bool is_pm() const{
 		/* Your code here */
 		return false;
 	}
