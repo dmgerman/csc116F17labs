@@ -9,7 +9,7 @@
 
 /* Clock class */
 
-class Clock{
+class Clock {
 /* Public members - Accessible by all users of the class */
 public:
 
@@ -18,7 +18,7 @@ public:
   /* Constructor ()
      The default constructor sets the time to 00:00 (i.e. midnight)
   */
-  Clock(){
+  Clock() {
     hour = 0;
     minute = 0;
   }
@@ -30,7 +30,7 @@ public:
      or the provided minute is not in the range [0,59] (inclusive),
      throw a std::runtime_error with the message "Invalid time".
   */
-  Clock(int h, int m){
+  Clock(int h, int m) {
     /* Your code here */
   }
 
@@ -47,13 +47,13 @@ public:
        The only exception that should be thrown out of this constructor
        is std::runtime_error.
   */
-  Clock( std::string time_string ){
+  Clock( std::string time_string ) {
     /* Your code here */
     /* Do not implement this until you reach part 2 */
   }
 
   /* Destructors */
-  ~Clock(){
+  ~Clock() {
     /* Nothing is needed here right now */
   }
 
@@ -121,7 +121,7 @@ public:
     - If the time is 22:50, advance_time( 1, 16 ) will make the time 00:06
   */
 
-  void advance_time(int add_hour, int add_minute){
+  void advance_time(int add_hour, int add_minute) {
     /* Your code here */
   }
 
@@ -143,7 +143,7 @@ private:
      - int_to_string(6, 5) returns "00006"
      - int_to_string(-6,5) returns "-00006"
   */
-  std::string int_to_string(int x, int digits){
+  std::string int_to_string(int x, int digits) const {
     //std::to_string converts x to a string, but does not allow the width
     //of the resulting string to be specified.
     std::string s = std::to_string(x);
@@ -159,8 +159,7 @@ private:
 
 
 
-int main()
-{
+int main() {
   int initial_hour, initial_minute;
   int advance_hour, advance_minute;
 
