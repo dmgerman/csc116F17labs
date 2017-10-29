@@ -22,18 +22,25 @@ public:
     double getY() const;
 
     // return a new point with the inverted coordinates
-    Point operator-();
+    Point operator-() const;
 
     // assignment operator
-    Point &operator=(Point p2);
+    Point & operator=(Point const & p2);
 
     // translate a point by the coordinates of the other point
-    Point &operator+=(Point p2);
+    Point & operator+=(Point const & p2);
+
+    // add two points
+    Point operator+(Point const & p2) const;
+
+    // multiply fields in a point by a scalar
+    Point operator*(double s) const;
 
     // compute the distance to another point
-    double distance(Point p2);
+    double distance(Point const & p2) const;
 };
 
 // overload the operator << to print to a given stream
-std::ostream &operator<< (std::ostream &output, Point &p);
+std::ostream & operator<< (std::ostream & output, Point const & p);
+std::ostream & operator<< (Point const & p, std::ostream & output);
 #endif
