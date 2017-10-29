@@ -1,15 +1,13 @@
-/* part1.cpp
-  
-   CSC 116 Fall 2016 - Lab 7
-   
-*/
+/*
+ * part1.cpp
+ * CSC 116 Fall 2017 - Lab 07
+ */
+
 #include <iostream>
-#include <string>
 #include "point.hpp"
 
-int main()
-{
-    Point p0(0.0,0.0);
+int main() {
+    Point p0;
     Point p1(1.0, 1.0);
     Point p2(5.9, 0.2);
     Point p3 {p0};
