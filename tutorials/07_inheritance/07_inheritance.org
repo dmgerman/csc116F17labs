@@ -170,4 +170,5 @@ public:
 1. Can we construct a ~Shape~ object?
 2. What is the purpose of virtual methods? How are they different from normal methods?
 3. How does ~Square~ call the ~Rectangle~ constructor of it's base class?
-4. We can call methods defined in the ~Rectangle~ class from ~Square~. Can we call methods defined in the ~Shape~ class from ~Square~?
+4. Note how there are calls to the ~area~, ~width~, ~height~ and some other methods in ~part3.cpp~ from square. Where are they defined?
+5. We can call methods defined in the ~Rectangle~ class from ~Square~. Can we call methods defined in the ~Shape~ class from ~Square~?
