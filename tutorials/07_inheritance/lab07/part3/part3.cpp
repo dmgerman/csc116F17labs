@@ -1,38 +1,31 @@
-/* part1.CPO
-  
-   CSC 116 Fall 2016 - Lab 7
-   
-*/
+/*
+ * part3.cpp
+ *
+ * CSC 116 Fall 2017 - Lab 07
+ */
+
 #include <iostream>
 #include <string>
+
+#include "square.hpp"
 #include "point.hpp"
-#include "circle.hpp"
 
-int main()
-{
-    Point p0(0.0,0.0);
+int main(int argc, char *argv[]) {
 
-    Point p1(3.0, 4.0);
+  Square square(Point(), 2);
 
-    Circle s1(1.0, 1.0, 1.0);
-    Circle s2(s1);
-    Circle s3;
-    Circle s4(0,0,2.0);
+  std::cout << "square Class: " << square.name() << std::endl;
+  std::cout << "square area: "  << square.area() << std::endl;
+  std::cout << "square dimensions: "  << square.width() << " x " << square.height() << std::endl;
+  std::cout << "square center: "  << square.center() << std::endl;
+  std::cout << "square min/max: " << square.getMin() << " " << square.getMax() << std::endl;
 
-    s3 = s1;
+  Square square1(Point(1, 2), 3);
+  std::cout << "Square1 Class: " << square1.name() << std::endl;
+  std::cout << "square1 area: "  << square1.area() << std::endl;
+  std::cout << "square1 dimensions: "  << square1.width() << " x " << square1.height() << std::endl;
+  std::cout << "square1 center: " << square1.center() << std::endl;
+  std::cout << "square min/max: " << square1.getMin() << " " << square1.getMax() << std::endl;
 
-    s3 += p1;
-
-    std::cout << p0 << std::endl;
-    std::cout << p1 << std::endl;
-    std::cout << s1 << std::endl;
-    std::cout << s2 << std::endl;
-    std::cout << s3 << std::endl;
-    std::cout << s4 << std::endl;
-
-    std::cout << "Distance between s1 and s2 is " << s1.distance(s2) << std::endl;
-    std::cout << "Distance between s1 and s3 is " << s1.distance(s3) << std::endl;
-    std::cout << "Distance between s1 and p1 is " << s1.distance(p1) << std::endl;
-
-    return 0;
+  return 0;
 }

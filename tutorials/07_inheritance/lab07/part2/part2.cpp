@@ -1,38 +1,30 @@
-/* part1.CPO
-  
-   CSC 116 Fall 2016 - Lab 7
-   
-*/
+/*
+ * part2.cpp
+ *
+ * CSC 116 Fall 2017 - Lab 07
+ */
 #include <iostream>
 #include <string>
+
 #include "point.hpp"
-#include "square.hpp"
+#include "rectangle.hpp"
 
-int main()
-{
-    Point p0(0.0,0.0);
+int main(int argc, char *argv[]) {
 
-    Point p1(3.0, 4.0);
+    Point p0;
+    Point p1(1., 2.);
 
-    Square s1(1.0, 1.0, 1.0);
-    Square s2(s1);
-    Square s3;
-    Square s4(0,0,2.0);
+    Rectangle rect(p0, p1);
+    std::cout << "Rectangle type: " << rect.name() << std::endl;
+    std::cout << "Rectangle center: " << rect.center() << std::endl;
+    std::cout << "Rectangle dimensions: " << rect.width() << " x " << rect.height() << std::endl;
+    std::cout << "Rectangle min and max: " << rect.getMin() << " and " << rect.getMax() << std::endl;
 
-    s3 = s1;
-
-    s3 += p1;
-
-    std::cout << p0 << std::endl;
-    std::cout << p1 << std::endl;
-    std::cout << s1 << std::endl;
-    std::cout << s2 << std::endl;
-    std::cout << s3 << std::endl;
-    std::cout << s4 << std::endl;
-
-    std::cout << "Distance between s1 and s2 is " << s1.distance(s2) << std::endl;
-    std::cout << "Distance between s1 and s3 is " << s1.distance(s3) << std::endl;
-    std::cout << "Distance between s1 and p1 is " << s1.distance(p1) << std::endl;
+    Rectangle rect1(p1, {3, 3});
+    std::cout << "Rectangle 1 type: " << rect1.name() << std::endl;
+    std::cout << "Rectangle 1 center: " << rect1.center() << std::endl;
+    std::cout << "Rectangle 1 dimensions: " << rect1.width() << " x " << rect1.height() << std::endl;
+    std::cout << "Rectangle 1 min and max: " << rect1.getMin() << " and " << rect1.getMax() << std::endl;
 
     return 0;
 }

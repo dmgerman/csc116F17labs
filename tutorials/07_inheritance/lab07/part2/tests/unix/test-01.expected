@@ -1,15 +1,8 @@
-Object of type [point]. Location (0,0) with area: nan
-
-Object of type [point]. Location (3,4) with area: nan
-
-Object of type [square]. Location (1,1) with area: 1 and length of side: 1
-
-Object of type [square]. Location (1,1) with area: 1 and length of side: 1
-
-Object of type [square]. Location (4,5) with area: 1 and length of side: 1
-
-Object of type [square]. Location (0,0) with area: 4 and length of side: 2
-
-Distance between s1 and s2 is 0
-Distance between s1 and s3 is 5
-Distance between s1 and p1 is 3.60555
+Rectangle type: Rectangle
+Rectangle center: Point [0.5, 1]
+Rectangle dimensions: 1 x 2
+Rectangle min and max: Point [0, 0] and Point [1, 2]
+Rectangle 1 type: Rectangle
+Rectangle 1 center: Point [2, 2.5]
+Rectangle 1 dimensions: 2 x 1
+Rectangle 1 min and max: Point [1, 2] and Point [3, 3]
