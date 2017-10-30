@@ -3,7 +3,7 @@
 #+TAGS:
 #+SEQ_TODO: TODO STARTED DONE DEFERRED CANCELLED | WAITING DELEGATED APPT
 #+DRAWERS: HIDDEN STATE
-#+TITLE: Inheritance 
+#+TITLE: Inheritance
 #+PROPERTY: header-args:sql             :engine postgresql  :exports both :cmdline csc370
 #+PROPERTY: header-args:sqlite          :db /path/to/db  :colnames yes
 #+PROPERTY: header-args:C++             :results output :flags -std=c++14 -Wall --pedantic -Werror
@@ -16,154 +16,158 @@ Inheritance is a powerful concept in object-oriented languages. Its basic premis
 based on another one. The new class (called the /derived/ class) inherits all the attributes and methods of the other class
 (its /base/ class).
 
-As with previous labs, download the files from 
+As with previous labs, download the files from
 https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab07-files.zip
 and expand them into your h: drive.
 
 * Part 1
 
-Go to the directory ~part1~ of the lab and run cmake as usual to create the Visual Studio configuration files. 
+Go to the directory ~part1~ of the lab and run cmake as usual to create the Visual Studio configuration files.
 Open the file ~part1.cpp~.
 
-In this part you will implement a class for a two dimensional ~point_class~. 
+In this part you will implement a class for a two dimensional ~Point~.
 
-The declaration for ~point_class~ is:
+The declaration for ~Point~ is:
 
 #+BEGIN_SRC C++
 class Point{
-    double x; 
-    double y;
+	double x;
+	double y;
 public:
-// constructors
-    Point();
-    Point(const double _x, const double _y);
-    Point(const Point &p);
-// get coordinates
-    double getX()const;
-    double getY() const;
-// return a new point with the inverted coordinates
-    Point operator-();
-// assignment operator
-    Point &operator=(Point p2);
-// translate a point by the coordinates of the other point    
-    Point &operator+=(Point p2);
-// compute the distance to another point
-    double distance(Point p2);
-// return 0 for a point
-    virtual double area();
-// return the name of the class
-    virtual std::string name();
-// return a string describing the current object
-    virtual std::string properties();
+	// constructors
+	Point();
+	Point(double x, double y);
+	Point(Point const & p);
+	// get coordinates
+	double getX() const;
+	double getY() const;
+	// return a new point with the inverted coordinates
+	Point operator-() const;
+	// assignment operator
+	Point &operator=(Point const & p2);
+	// translate a point by the coordinates of the other point
+	Point &operator+=(Point const & p2);
+	// add two points together
+	Point operator+(Point const & p2) const;
+	// multiply a point by a sclar
+	Point operator*(double s) const;
+	// compute the distance to another point
+	double distance(Point const & p2) const;
 };
 
 #+END_SRC
 
-The ~point~ has the following constructors:
+The ~Point~ has the following constructors:
 
 - A default constructor that sets its coordinates to (0,0)
 - A constructor that takes two coordinates
-- A copy constructor 
+- A copy constructor
 
-The ~point~ has the following methods:
+The ~Point~ has the following methods:
 
 - getX(): retrieve its X coordinate
 - getY(): retrieve its Y coordinate
-- operator-: returns a new point with the coordinates invertd
+- operator-: returns a new point with the coordinates inverted
 - operator=: set the point to the (x,y) coordinates of the point provided
+- operator+: add the fields of two points
+- operator*: multiply the fields of a point by a scalar
 - distance(point p2): returns the distance to another point
-- area(): return zero (we will assume that the area of  point is zero)
-- name(): returns the string "point"
-- properties(): return a string that describes the main properties of the 
 
-Some methods are not implemented.  Go through each of them an implement those missing.
+These methods are not implemented. Go through and implement them.
 
 Test your implementation.
-
-** Questions:
-
-1. How does a constructor (such as ~Circle::Circle(const Circle &sq)~) call the constructor of its base class?
-
 
 * Part 2
 
-For this part we have implemented a derived class of ~point~: ~square~. It will inherit
-most of its methods  from ~point~, override some and add new ones.
+Copy your implementation of ~point.cpp~ from part 1.
 
-- Go to the directory ~part2~
-- Copy the file point.cpp from your solution of part1 into this directory.
-- Create the directory build and run cmake as usual.
+For this part we implement ~Rectangle~, which is a derived class of ~Shape~.
 
-Open the file ~square.hpp~. The declaration for ~square_class~ is:
+Open ~shape.hpp~, the declaration for ~Shape~ is:
 
 #+BEGIN_SRC C++
-class Square: public Point{
-    double side;
-    
+class Shape {
 public:
-// constructors
-    Square(const Square &sq);
-    Square(double _x, double _y, double _side);
-    Square();
-    
-    double area();
-    double getSide() const;
 
-    std::string name();
+  // Abstract methods
+  virtual double area() const = 0;
+  virtual double perimeter() const = 0;
+  virtual Point center() const = 0;
 
-    std::string properties();
-
+  virtual std::string name() const {
+    return "Shape";
+  }
 };
 #+END_SRC
 
+All shapes must implement ~area~, ~perimeter~, and ~center~.
 
-Open ~square.cpp~ and finish the implementation of the class.
+~name~ simply returns the name of the class, so we should probably update that too.
+
+Open ~rectangle.hpp~
+
+#+BEGIN_SRC C++
+class Rectangle: public Shape {
+public:
+	  // Constructors
+    Rectangle(Point const & min, Point const & max);
+    Rectangle(double x, double y, double width, double height);
+	  /*
+     * inherited methods that we need to implement
+     * or reimplement
+     */
+    double area() const override;
+    double perimeter() const override;
+    Point center() const override;
+    std::string name() const override;
+
+    // Other methods
+    double width() const;
+	  double height() const;
+    Point getMin() const;
+    Point getMax() const;
+
+private:
+    Point mMin;
+    Point mMax;
+};
+#+END_SRC
+
+Rectangle has two constructors, four methods that it overrides from the ~Shape~ class,  and four other methods that do not apply to all shapes.
+
+When a class inherits from another class, it has an /is-a/ relationship with that object. In this case, a ~Rectangle~ is a ~Shape~. When a class is composed of an object when it contains member variables of that type. This is called a /has-a/ relationship. In this case, the ~Rectangle~ has a ~Point~, or multiple points.
+
+Open ~rectangle.cpp~ and finish implementing the methods.
 
 Test your implementation.
-
-** Questions:
-
-1. Modify the file ~point.hpp~. Remove the three occurrences of the word ~virtual~. Recompile your program and run the tests.
-   Compare the new output with the expected output.
-   Explain the impact of ~virtual~ in the class ~Square~.
-
-2. Look at the source code of the method ~Square::properties~. Explain how the method is implemented, including what does the call to 
-   ~Point::properties~ does.
 
 
 * Part 3
 
-For this part you will implement a a derived class of ~Point~ called ~Circle~. As ~Square~, it will inherit from ~Point~ .
+For this part, you will implement a derived class of ~Rectangle~, the ~Square~. Again, a ~Square~ is a ~Rectangle~, and it has points.
+Because the ~Square~ is a  ~Rectangle~, we inherit the members and methods from ~Rectangle~.
 
-- Go to the directory ~part3~. 
-- Copy the file ~point.cpp~ from part1 into  this directory. 
+Copy ~point.cpp~ and ~rectangle.cpp~ from part2.
+
+- Go to the directory ~part3/~.
+- Copy ~point.cpp~ from ~part2/~ into this directory
+- Copy ~rectangle.cpp~ from ~part2/~ into this directory.
 - Create the directory build and run cmake as usual
 
-
-The declaration for ~Circle~ is:
-
 #+BEGIN_SRC C++
-class Circle: public Point{
-    double radius;
-    
+class Square : public Rectangle {
 public:
-// constructors
-    Circle(const Circle &sq);
-    Circle(double _x, double _y, double _side);
-    Circle();
-    
-    double area();
-    double getRadius() const;
+  Square(Point const & min, double width);
 
-    std::string name();
-    std::string properties();
-
+  std::string name() const override {
+    return "Square";
+  }
 };
 #+END_SRC
 
+* Questions
 
-Finish the implementation of the class in the file ~circle.cpp~. 
-
-Test your implementation.
-
-
+1. Can we construct a ~Shape~ object?
+2. What is the purpose of virtual methods? How are they different from normal methods?
+3. How does ~Square~ call the ~Rectangle~ constructor of it's base class?
+4. We can call methods defined in the ~Rectangle~ class from ~Square~. Can we call methods defined in the ~Shape~ class from ~Square~?
