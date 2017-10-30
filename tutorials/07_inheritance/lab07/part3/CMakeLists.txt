@@ -13,7 +13,8 @@ SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
 
 set(binary part3)
 
-add_executable(${binary} ${binary}.cpp point.hpp point.cpp circle.cpp circle.hpp)
+add_executable(${binary} ${binary}.cpp point.hpp point.cpp rectangle.cpp
+  rectangle.hpp square.cpp square.hpp)
 
 
 target_compile_features(${binary} PRIVATE cxx_decltype_auto cxx_auto_type)
@@ -21,13 +22,13 @@ target_compile_features(${binary} PRIVATE cxx_decltype_auto cxx_auto_type)
 
 enable_testing()
 
-# set the binary to bes tested in each of the tests below. 
+# set the binary to bes tested in each of the tests below.
 set(test_cmd ${CMAKE_BINARY_DIR}/${binary}${CMAKE_EXECUTABLE_SUFFIX} )
 set(tester   ${CMAKE_CURRENT_SOURCE_DIR}/tester.cmake)
 set(tests_loc ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 add_test(
-    NAME test01 
+    NAME test01
     COMMAND ${CMAKE_COMMAND} -DEXE=${test_cmd} -D ID=01 -DLOC=${tests_loc} -P ${tester}
 )
 

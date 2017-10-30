@@ -1,54 +1,46 @@
-/* point.cpp
-  
-   CSC 116 Fall 2016 - Lab 6
-   
-*/
+/* point.hpp
+ * CSC 116 Fall 2017 - Lab 7
+ */
+
 #ifndef POINT_HPP
 #define POINT_HPP
 
-#include <iostream>
-#include <string>
+#include <ostream>
 
 class Point{
-    double x;
-    double y;
-    
+    double mX;
+    double mY;
+
 public:
-// constructors
+    // constructors
     Point();
-    Point(const double _x, const double _y);
-    Point(const Point &p);
-    
-    
-// get coordinates
-    double getX()const;
+    Point(double x, double y);
+    Point(Point const & p);
+
+    // get coordinates
+    double getX() const;
     double getY() const;
 
-// return a new point with the inverted coordinates
-    Point operator-();
+    // return a new point with the inverted coordinates
+    Point operator-() const;
 
-// assignment operator
-    Point &operator=(Point p2);
+    // assignment operator
+    Point & operator=(Point const & p2);
 
-// translate a point by the coordinates of the other point    
-    Point &operator+=(Point p2);
-    
-// compute the distance to another point
-    double distance(Point p2);
+    // translate a point by the coordinates of the other point
+    Point & operator+=(Point const & p2);
 
-// return 0 for a point
-    virtual double area();
+    // add two points
+    Point operator+(Point const & p2) const;
 
-// return the name of the class
-    virtual std::string name();
+    // multiply fields in a point by a scalar
+    Point operator*(double s) const;
 
-// return a string describing the current object
-    virtual std::string properties();
-
-
+    // compute the distance to another point
+    double distance(Point const & p2) const;
 };
 
 // overload the operator << to print to a given stream
-std::ostream &operator<< (std::ostream &output, Point &p);
-
+std::ostream & operator<< (std::ostream & output, Point const & p);
+std::ostream & operator<< (Point const & p, std::ostream & output);
 #endif
