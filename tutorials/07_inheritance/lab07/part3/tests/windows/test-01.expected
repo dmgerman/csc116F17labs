@@ -1,0 +1,10 @@
+square Class: Square
+square area: 4
+square dimensions: 2 x 2
+square center: Point [1, 1]
+square min/max: Point [0, 0] Point [2, 2]
+Square1 Class: Square
+square1 area: 9
+square1 dimensions: 3 x 3
+square1 center: Point [2.5, 3.5]
+square min/max: Point [1, 2] Point [4, 5]

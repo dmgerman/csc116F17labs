@@ -1,0 +1,17 @@
+Calling Constructors:
+p0: Point [0, 0]
+p1: Point [1, 1]
+p2: Point [5.9, 0.2]
+p3: Point [0, 0]
+p4: Point [0, 0]
+p5: Point [3, 2]
+Performing Operations:
+p3  =  p1: p3 = Point [1, 1]
+p4  = -p1: p4 = Point [-1, -1]
+p5 +=  p2: p5 = Point [8.9, 2.2]
+p1 + p3 = Point [2, 2]
+p1 * 2  = Point [2, 2]
+Computing Distances:
+Distance between p0 and p1 is 1.41421
+Distance between p3 and p4 is 2.82843
+Distance between p4 and p3 is 2.82843
