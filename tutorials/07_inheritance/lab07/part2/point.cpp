@@ -36,7 +36,7 @@ double Point::getY() const {
 // inverted:
 //   the new point will have coordinates
 // at (-getX(), -getY())
-Point Point::operator-() {
+Point Point::operator-() const {
     Point temp;
     // write your code here
     return temp;
@@ -44,7 +44,7 @@ Point Point::operator-() {
 
 // set the coordinates of the current point
 // to the coordinates of p2
-Point &Point::operator=(Point p2) {
+Point &Point::operator=(Point const & p2) {
     // write your code here
 
     /// this function should return *this
@@ -53,21 +53,38 @@ Point &Point::operator=(Point p2) {
 
 // increment the coordinates of the current point
 // by the coordinates of p2
-Point &Point::operator+=(Point p2) {
+Point &Point::operator+=(Point const & p2) {
     // write your code here
 
     /// this function should return *this
     return *this;
 }
 
+// Add two points together
+// should return a new point
+Point Point::operator+(Point const & p2) const {
+  // write your code here
+}
+
+// Multiple elements of the point by a scalar
+// should return a new point
+Point Point::operator*(double s) const {
+  // write your code here
+}
+
 // compute the distance between the current
 // point and the point p2
-double Point::distance(Point p2) {
+double Point::distance(Point const & p2) const {
     // write your code here
 }
 
 // add the operator << to allow printing directly to a stream
-std::ostream &operator<< (std::ostream &output, Point &p) {
+std::ostream & operator<< (std::ostream & output, Point const & p) {
+    output << "Point [" << p.getX() << ", " << p.getY() << "]";
+    return output;
+}
+
+std::ostream & operator<< (Point const & p, std::ostream & output) {
     output << "Point [" << p.getX() << ", " << p.getY() << "]";
     return output;
 }
