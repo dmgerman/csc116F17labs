@@ -13,8 +13,7 @@ SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}")
 
 set(binary part3)
 
-add_executable(${binary} ${binary}.cpp point.hpp point.cpp rectangle.cpp
-  rectangle.hpp square.cpp square.hpp)
+add_executable(${binary} ${binary}.cpp point.hpp point.cpp shape.hpp rectangle.cpp rectangle.hpp square.cpp square.hpp)
 
 
 target_compile_features(${binary} PRIVATE cxx_decltype_auto cxx_auto_type)
