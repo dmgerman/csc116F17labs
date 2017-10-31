@@ -88,15 +88,14 @@ Open ~shape.hpp~, the declaration for ~Shape~ is:
 #+BEGIN_SRC C++
 class Shape {
 public:
+	// Abstract methods
+	virtual double area() const = 0;
+	virtual double perimeter() const = 0;
+	virtual Point center() const = 0;
 
-  // Abstract methods
-  virtual double area() const = 0;
-  virtual double perimeter() const = 0;
-  virtual Point center() const = 0;
-
-  virtual std::string name() const {
-    return "Shape";
-  }
+	virtual std::string name() const {
+		return "Shape";
+	}
 };
 #+END_SRC
 
@@ -109,27 +108,27 @@ Open ~rectangle.hpp~
 #+BEGIN_SRC C++
 class Rectangle: public Shape {
 public:
-	  // Constructors
-    Rectangle(Point const & min, Point const & max);
-    Rectangle(double x, double y, double width, double height);
-	  /*
-     * inherited methods that we need to implement
-     * or reimplement
-     */
-    double area() const override;
-    double perimeter() const override;
-    Point center() const override;
-    std::string name() const override;
+	// Constructors
+	Rectangle(Point const & min, Point const & max);
+	Rectangle(double x, double y, double width, double height);
+	/*
+	* inherited methods that we need to implement
+	* or reimplement
+	*/
+	double area() const override;
+	double perimeter() const override;
+	Point center() const override;
+	std::string name() const override;
 
-    // Other methods
-    double width() const;
-	  double height() const;
-    Point getMin() const;
-    Point getMax() const;
+	// Other methods
+	double width() const;
+	double height() const;
+	Point getMin() const;
+	Point getMax() const;
 
 private:
-    Point mMin;
-    Point mMax;
+	Point mMin;
+	Point mMax;
 };
 #+END_SRC
 
