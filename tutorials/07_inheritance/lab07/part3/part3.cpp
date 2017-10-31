@@ -10,18 +10,22 @@
 #include "square.hpp"
 #include "point.hpp"
 
+std::string getName(Shape const & s) {
+  return s.name();
+}
+
 int main(int argc, char *argv[]) {
 
   Square square(Point(), 2);
 
-  std::cout << "square Class: " << square.name() << std::endl;
+  std::cout << "square Class: " << getName(square) << std::endl;
   std::cout << "square area: "  << square.area() << std::endl;
   std::cout << "square dimensions: "  << square.width() << " x " << square.height() << std::endl;
   std::cout << "square center: "  << square.center() << std::endl;
   std::cout << "square min/max: " << square.getMin() << " " << square.getMax() << std::endl;
 
   Square square1(Point(1, 2), 3);
-  std::cout << "Square1 Class: " << square1.name() << std::endl;
+  std::cout << "Square1 Class: " << getName(square1) << std::endl;
   std::cout << "square1 area: "  << square1.area() << std::endl;
   std::cout << "square1 dimensions: "  << square1.width() << " x " << square1.height() << std::endl;
   std::cout << "square1 center: " << square1.center() << std::endl;
