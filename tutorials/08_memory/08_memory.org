@@ -136,7 +136,7 @@ It requires a pointer, and it sets the point to that memory:
 
 #+BEGIN_SRC C++
 std::shared_ptr<int> p1 (nullptr); // p1 points to nullptr
-std::shared_ptr<int> p2 (p); // p2 points to the same location as p
+std::shared_ptr<int> p2 (p1); // p2 points to the same location as p1
 #+END_SRC
 
 To allocate memory for a std::shared_ptr we must use *std::make_shared*. This function allocates memory for a given object and calls its constructor:
