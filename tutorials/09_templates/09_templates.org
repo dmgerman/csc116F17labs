@@ -258,7 +258,12 @@ std::cout << B.get_sum() << " " << A.get_sum() << std::endl;
 
 
 * Lab exercises
-As usual, code files and automated tests have been provided at [[https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/files/lab09-files.zip][https://github.com/dmgerman/csc116F17labs/blob/master/tutorials/files/lab09-files.zip]]. For this lab, there is only one tester, but several independent programs, each containing a task to implement.
+
+Download and extract the zip file
+
+https://github.com/dmgerman/csc116F17labs/raw/master/tutorials/files/lab09-files.zip
+
+For this lab, there is only one tester, but several independent programs, each containing a task to implement.
 Except for part 4, all of the tests pass already. Your task is to adapt the code in the files provided to use templates, instead of duplicated code, and ensure that the tests
 continue to pass. Each part is contained in a different .cpp file. The files are as follows:
  - ~part1.cpp~: Write a templated function to add up the elements of a vector
